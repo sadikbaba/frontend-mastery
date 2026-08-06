@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript to Full-Stack Roadmap — Architecture Map</title>
+<style>
+  :root{
+    --bg:#0f1115;
+    --panel:#161923;
+    --panel2:#1c202c;
+    --line:#2a2f3d;
+    --line-soft:#20242f;
+    --text:#e8e9ee;
+    --text-dim:#9aa0b4;
+    --text-mute:#5f6478;
+    --accent:#7f77dd;
+    --accent-soft:#3c3489;
+    --accent-line:#534ab7;
+    --teal:#1d9e75;
+    --teal-soft:#085041;
+    --coral:#d85a30;
+    --coral-soft:#712b13;
+    --amber:#ba7517;
+    --amber-soft:#633806;
+    --radius:10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+  body{
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    overflow:hidden;
+  }
+  header{
+    padding:16px 24px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-shrink:0;
+    background:var(--panel);
+  }
+  header h1{
+    font-size:15px;
+    font-weight:600;
+    margin:0;
+    letter-spacing:.2px;
+  }
+  header p{
+    margin:2px 0 0;
+    font-size:12px;
+    color:var(--text-dim);
+  }
+  .header-actions{
+    display:flex;
+    gap:8px;
+  }
+  button.util{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    color:var(--text-dim);
+    font-size:12px;
+    padding:7px 12px;
+    border-radius:7px;
+    cursor:pointer;
+    transition:.15s;
+  }
+  button.util:hover{
+    color:var(--text);
+    border-color:var(--accent-line);
+  }
+  .layout{
+    flex:1;
+    display:flex;
+    min-height:0;
+  }
+  .canvas-wrap{
+    flex:1;
+    position:relative;
+    overflow:auto;
+    background:
+      radial-gradient(circle at 1px 1px, var(--line-soft) 1px, transparent 0) 0 0/22px 22px;
+  }
+  svg{
+    display:block;
+  }
+  .node rect{
+    fill:var(--panel2);
+    stroke:var(--line);
+    stroke-width:1;
+    transition:.15s;
+  }
+  .node text{
+    fill:var(--text);
+    font-size:12.5px;
+    font-weight:600;
+    pointer-events:none;
+  }
+  .node .sub{
+    fill:var(--text-dim);
+    font-size:10.5px;
+    font-weight:400;
+  }
+  .node{cursor:pointer;}
+  .node:hover rect{
+    stroke:var(--accent-line);
+  }
+  .node.dim rect{opacity:.18;}
+  .node.dim text{opacity:.18;}
+  .node.active rect{
+    stroke:var(--accent);
+    stroke-width:2;
+    fill:var(--accent-soft);
+  }
+  .node.active text{fill:#fff;}
+  .node.active .sub{fill:#cfcbf6;}
+
+  .edge{
+    stroke:var(--line);
+    stroke-width:1.4;
+    fill:none;
+    marker-end:url(#arrow);
+    transition:.15s;
+  }
+  .edge.dim{opacity:.10;}
+  .edge.active{
+    stroke:var(--accent);
+    stroke-width:2.4;
+    opacity:1;
+    marker-end:url(#arrow-active);
+  }
+
+  .phase-band rect{
+    fill:var(--panel);
+    stroke:var(--line-soft);
+    stroke-dasharray:3 4;
+    stroke-width:1;
+  }
+  .phase-band text{
+    fill:var(--text-mute);
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+  }
+
+  aside{
+    width:320px;
+    flex-shrink:0;
+    border-left:1px solid var(--line);
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .aside-tabs{
+    display:flex;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .aside-tab{
+    flex:1;
+    padding:12px 0;
+    text-align:center;
+    font-size:12px;
+    font-weight:600;
+    color:var(--text-mute);
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+  }
+  .aside-tab.on{
+    color:var(--text);
+    border-bottom-color:var(--accent);
+  }
+  .aside-body{
+    flex:1;
+    overflow-y:auto;
+    padding:14px;
+  }
+  .flow-item{
+    padding:11px 12px;
+    border-radius:9px;
+    border:1px solid var(--line);
+    margin-bottom:8px;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .flow-item:hover{
+    border-color:var(--accent-line);
+    background:var(--panel2);
+  }
+  .flow-item.on{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+  }
+  .flow-item .ftitle{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .flow-item .fcount{
+    font-size:10px;
+    color:var(--text-mute);
+    background:var(--panel2);
+    border-radius:20px;
+    padding:1px 7px;
+    margin-left:auto;
+  }
+  .flow-item.on .fcount{background:var(--accent-line);color:#fff;}
+  .flow-item .fdesc{
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:4px;
+    line-height:1.4;
+  }
+  .dot{
+    width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  }
+
+  .detail-empty{
+    color:var(--text-mute);
+    font-size:12.5px;
+    line-height:1.6;
+    padding:8px 2px;
+  }
+  .detail-title{
+    font-size:15px;
+    font-weight:700;
+    margin:2px 0 3px;
+  }
+  .detail-phase{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  .detail-row{
+    padding:10px 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .detail-row:first-of-type{border-top:none;}
+  .detail-label{
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    color:var(--text-mute);
+    margin-bottom:5px;
+  }
+  .detail-val{
+    font-size:12.5px;
+    color:var(--text-dim);
+    line-height:1.5;
+  }
+  .chip{
+    display:inline-block;
+    font-size:10.5px;
+    padding:3px 9px;
+    border-radius:20px;
+    background:var(--panel2);
+    border:1px solid var(--line);
+    color:var(--text-dim);
+    margin:0 5px 5px 0;
+  }
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:20px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--line-soft);}
+  .legend{
+    position:absolute;
+    bottom:16px;
+    left:16px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:10px 14px;
+    font-size:11px;
+    color:var(--text-dim);
+    display:flex;
+    gap:16px;
+  }
+  .legend span{display:flex;align-items:center;gap:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>JavaScript → Full-Stack Roadmap</h1>
+    <p>8 phases · foundations to production hardening · click any node or flow to trace the path</p>
+  </div>
+  <div class="header-actions">
+    <button class="util" id="resetBtn">Reset view</button>
+    <button class="util" id="jsonBtn">Copy JSON</button>
+  </div>
+</header>
+
+<div class="layout">
+  <div class="canvas-wrap" id="canvasWrap">
+    <svg id="svg" width="1720" height="1180" viewBox="0 0 1720 1180">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#2a2f3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#7f77dd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <g id="bands"></g>
+      <g id="edges"></g>
+      <g id="nodes"></g>
+    </svg>
+  </div>
+
+  <aside>
+    <div class="aside-tabs">
+      <div class="aside-tab on" data-tab="flows">Flows</div>
+      <div class="aside-tab" data-tab="detail">Detail</div>
+    </div>
+    <div class="aside-body" id="asideBody"></div>
+  </aside>
+</div>
+
+<script>
+const DATA = {
+  nodes: [
+    {id:"js1", phase:1, label:"Values, types, operators", sub:"Primitives & typeof", x:60,  y:70,  w:190},
+    {id:"js2", phase:1, label:"Scope & closures", sub:"var / let / const, lexical scope", x:280, y:70,  w:200},
+    {id:"js3", phase:1, label:"Functions & this", sub:"Arrow fns, call/apply/bind", x:510, y:70,  w:190},
+    {id:"js4", phase:1, label:"Objects, prototypes, classes", sub:"Prototype chain", x:730, y:70,  w:210},
+    {id:"js5", phase:1, label:"Arrays & functional tools", sub:"map / filter / reduce", x:970, y:70,  w:210},
+
+    {id:"dom1", phase:2, label:"DOM tree & selection", sub:"querySelector family", x:60,  y:220, w:190},
+    {id:"dom2", phase:2, label:"Events & delegation", sub:"Bubbling, listeners", x:280, y:220, w:190},
+    {id:"dom3", phase:2, label:"Create / update / remove nodes", sub:"DOM mutation", x:500, y:220, w:220},
+    {id:"dom4", phase:2, label:"Forms & validation", sub:"Native + custom checks", x:750, y:220, w:190},
+    {id:"dom5", phase:2, label:"Browser storage", sub:"localStorage, sessionStorage", x:970, y:220, w:200},
+
+    {id:"as1", phase:3, label:"Callbacks → promises → async/await", sub:"Control flow evolution", x:60,  y:370, w:280},
+    {id:"as2", phase:3, label:"Fetch API", sub:"Talking to real servers", x:370, y:370, w:180},
+    {id:"as3", phase:3, label:"Error handling strategies", sub:"try/catch, .catch()", x:580, y:370, w:210},
+    {id:"as4", phase:3, label:"Parallel vs sequential requests", sub:"Promise.all, chaining", x:820, y:370, w:230},
+    {id:"as5", phase:3, label:"CORS (practical)", sub:"Cross-origin reality", x:1080,y:370, w:180},
+
+    {id:"tool1", phase:4, label:"ES Modules", sub:"import / export", x:60,  y:520, w:170},
+    {id:"tool2", phase:4, label:"npm & package.json", sub:"Dependency management", x:260, y:520, w:210},
+    {id:"tool3", phase:4, label:"Vite", sub:"Dev server & bundling", x:500, y:520, w:170},
+    {id:"tool4", phase:4, label:"Env variables & structure", sub:"Config, folder conventions", x:700, y:520, w:230},
+
+    {id:"r1", phase:5, label:"Components & JSX", sub:"Declarative UI", x:60,  y:670, w:190},
+    {id:"r2", phase:5, label:"Props vs state", sub:"Data flow direction", x:280, y:670, w:180},
+    {id:"r3", phase:5, label:"useState & useEffect", sub:"Core hooks", x:490, y:670, w:200},
+    {id:"r4", phase:5, label:"Forms in React", sub:"Controlled components", x:720, y:670, w:190},
+    {id:"r5", phase:5, label:"Lifting state up", sub:"Shared state patterns", x:940, y:670, w:190},
+
+    {id:"fs1", phase:6, label:"Django models & migrations", sub:"Data layer", x:60,  y:820, w:230},
+    {id:"fs2", phase:6, label:"DRF serializers & views", sub:"REST API surface", x:320, y:820, w:220},
+    {id:"fs3", phase:6, label:"Auth (JWT / session)", sub:"Who is this request", x:570, y:820, w:210},
+    {id:"fs4", phase:6, label:"Permissions", sub:"What they can touch", x:810, y:820, w:170},
+    {id:"fs5", phase:6, label:"React API layer", sub:"fetch/axios + auth headers", x:1010,y:820, w:220},
+    {id:"fs6", phase:6, label:"Protected routes", sub:"Client-side gating", x:1260,y:820, w:180},
+
+    {id:"rn1", phase:7, label:"Expo vs bare workflow", sub:"Tooling choice", x:60,  y:970, w:210},
+    {id:"rn2", phase:7, label:"React Navigation", sub:"Screens & stacks", x:300, y:970, w:190},
+    {id:"rn3", phase:7, label:"Device APIs", sub:"Camera, storage, sensors", x:520, y:970, w:200},
+    {id:"rn4", phase:7, label:"Offline-first patterns", sub:"Local db + sync", x:750, y:970, w:210},
+
+    {id:"prod1", phase:8, label:"Performance & Core Web Vitals", sub:"Profiling, splitting", x:60,  y:1100,w:260},
+    {id:"prod2", phase:8, label:"Testing strategy", sub:"Unit, integration, e2e", x:350, y:1100,w:200},
+    {id:"prod3", phase:8, label:"Security basics", sub:"XSS, CSRF, token handling", x:580, y:1100,w:220},
+    {id:"prod4", phase:8, label:"Monitoring & CI", sub:"Error tracking, pipelines", x:830, y:1100,w:210}
+  ],
+
+  edges: [
+    ["js1","js2"],["js2","js3"],["js3","js4"],["js4","js5"],
+    ["js5","dom1"],
+    ["dom1","dom2"],["dom2","dom3"],["dom3","dom4"],["dom4","dom5"],
+    ["dom5","as1"],
+    ["as1","as2"],["as2","as3"],["as3","as4"],["as4","as5"],
+    ["as5","tool1"],
+    ["tool1","tool2"],["tool2","tool3"],["tool3","tool4"],
+    ["tool4","r1"],
+    ["r1","r2"],["r2","r3"],["r3","r4"],["r4","r5"],
+    ["r5","fs1"],
+    ["fs1","fs2"],["fs2","fs3"],["fs3","fs4"],["fs4","fs5"],["fs5","fs6"],
+    ["fs6","rn1"],
+    ["rn1","rn2"],["rn2","rn3"],["rn3","rn4"],
+    ["rn4","prod1"],
+    ["prod1","prod2"],["prod2","prod3"],["prod3","prod4"]
+  ],
+
+  flows: [
+    {
+      id:"foundation",
+      title:"Language foundation",
+      color:"#7f77dd",
+      desc:"Pure JavaScript mastery before touching a browser or framework.",
+      steps:["js1","js2","js3","js4","js5"]
+    },
+    {
+      id:"browser",
+      title:"Browser & interactivity",
+      color:"#1d9e75",
+      desc:"Make things appear on screen and respond to real user actions.",
+      steps:["dom1","dom2","dom3","dom4","dom5"]
+    },
+    {
+      id:"async",
+      title:"Talking to servers",
+      color:"#d85a30",
+      desc:"Promises, fetch, and handling everything that can go wrong over a network.",
+      steps:["as1","as2","as3","as4","as5"]
+    },
+    {
+      id:"auth-flow",
+      title:"Full-stack auth flow",
+      color:"#ba7517",
+      desc:"How a request proves who it is and what it is allowed to touch, backend to frontend.",
+      steps:["fs1","fs2","fs3","fs4","fs5","fs6"]
+    },
+    {
+      id:"full-path",
+      title:"Complete roadmap path",
+      color:"#7f77dd",
+      desc:"Every phase in order, foundations through production hardening.",
+      steps:["js1","dom1","as1","tool1","r1","fs1","rn1","prod1"]
+    },
+    {
+      id:"offline",
+      title:"Offline-capable app",
+      color:"#1d9e75",
+      desc:"Storage on web, then real offline-first patterns once you reach mobile.",
+      steps:["dom5","as1","fs5","rn4"]
+    }
+  ]
+};
+
+const PHASES = {
+  1:{name:"Phase 1 — JS Foundations", y:40, h:150},
+  2:{name:"Phase 2 — DOM & Browser", y:190, h:150},
+  3:{name:"Phase 3 — Async & APIs", y:340, h:150},
+  4:{name:"Phase 4 — Tooling & Modules", y:490, h:150},
+  5:{name:"Phase 5 — React Foundations", y:640, h:150},
+  6:{name:"Phase 6 — Full-Stack (Django + DRF + React)", y:790, h:150},
+  7:{name:"Phase 7 — React Native", y:940, h:150},
+  8:{name:"Phase 8 — Production Hardening", y:1070,h:100}
+};
+
+const NODE_H = 46;
+const byId = Object.fromEntries(DATA.nodes.map(n=>[n.id,n]));
+
+function centerRight(n){return {x:n.x+n.w, y:n.y+NODE_H/2};}
+function centerLeft(n){return {x:n.x, y:n.y+NODE_H/2};}
+function centerBottom(n){return {x:n.x+n.w/2, y:n.y+NODE_H};}
+function centerTop(n){return {x:n.x+n.w/2, y:n.y};}
+
+const bandsG = document.getElementById("bands");
+const edgesG = document.getElementById("edges");
+const nodesG = document.getElementById("nodes");
+
+Object.entries(PHASES).forEach(([num,p])=>{
+  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+  g.setAttribute("class","phase-band");
+  g.innerHTML = `
+    <rect x="20" y="${p.y}" width="1680" height="${p.h}" rx="12"></rect>
+    <text x="36" y="${p.y+20}">${p.name}</text>
+  `;
+  bandsG.appendChild(g);
+});
+
+DATA.edges.forEach(([a,b])=>{
+  const na = byId[a], nb = byId[b];
+  const sameRow = na.y === nb.y;
+  const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+  let d;
+  if(sameRow){
+    const s = centerRight(na), t = centerLeft(nb);
+    const mx = (s.x+t.x)/2;
+    d = `M${s.x} ${s.y} C${mx} ${s.y} ${mx} ${t.y} ${t.x} ${t.y}`;
+  } else {
+    const s = centerBottom(na), t = centerTop(nb);
+    const my = (s.y+t.y)/2;
+    d = `M${s.x} ${s.y} C${s.x} ${my} ${t.x} ${my} ${t.x} ${t.y}`;
+  }
+  path.setAttribute("d", d);
+  path.setAttribute("class","edge");
+  path.dataset.from = a;
+  path.dataset.to = b;
+  edgesG.appendChild(path);
+});
+
+DATA.nodes.forEach(n=>{
+  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+  g.setAttribute("class","node");
+  g.setAttribute("id","node-"+n.id);
+  g.innerHTML = `
+    <rect x="${n.x}" y="${n.y}" width="${n.w}" height="${NODE_H}" rx="8"></rect>
+    <text x="${n.x+14}" y="${n.y+19}">${n.label}</text>
+    <text class="sub" x="${n.x+14}" y="${n.y+35}">${n.sub}</text>
+  `;
+  g.addEventListener("click", ()=>selectNode(n.id));
+  nodesG.appendChild(g);
+});
+
+let activeFlow = null;
+let activeNode = null;
+
+function clearHighlight(){
+  document.querySelectorAll(".node").forEach(el=>el.classList.remove("active","dim"));
+  document.querySelectorAll(".edge").forEach(el=>el.classList.remove("active","dim"));
+}
+
+function highlightFlow(flow){
+  clearHighlight();
+  const stepSet = new Set(flow.steps);
+  document.querySelectorAll(".node").forEach(el=>{
+    const id = el.id.replace("node-","");
+    el.classList.add(stepSet.has(id) ? "active" : "dim");
+  });
+  document.querySelectorAll(".edge").forEach(el=>{
+    const from = el.dataset.from, to = el.dataset.to;
+    const fromIdx = flow.steps.indexOf(from);
+    const toIdx = flow.steps.indexOf(to);
+    const consecutive = fromIdx !== -1 && toIdx === fromIdx+1;
+    el.classList.add(consecutive ? "active" : "dim");
+  });
+}
+
+function selectFlow(id){
+  activeFlow = id;
+  activeNode = null;
+  const flow = DATA.flows.find(f=>f.id===id);
+  highlightFlow(flow);
+  renderFlows();
+  showDetailForFlow(flow);
+}
+
+function selectNode(id){
+  activeNode = id;
+  activeFlow = null;
+  clearHighlight();
+  document.getElementById("node-"+id).classList.add("active");
+  document.querySelectorAll(".edge").forEach(el=>{
+    if(el.dataset.from===id || el.dataset.to===id){
+      el.classList.add("active");
+    } else {
+      el.classList.add("dim");
+    }
+  });
+  document.querySelectorAll(".node").forEach(el=>{
+    const nid = el.id.replace("node-","");
+    if(nid!==id){
+      const connected = DATA.edges.some(([a,b])=>(a===id&&b===nid)||(b===id&&a===nid));
+      if(!connected) el.classList.add("dim");
+    }
+  });
+  switchTab("detail");
+  showDetailForNode(byId[id]);
+}
+
+function resetView(){
+  activeFlow = null; activeNode = null;
+  clearHighlight();
+  renderFlows();
+  document.getElementById("asideBody").innerHTML = `<div class="detail-empty">Select a node in the diagram, or a flow on the left, to trace the path through the roadmap.</div>`;
+}
+
+function switchTab(tab){
+  document.querySelectorAll(".aside-tab").forEach(t=>t.classList.toggle("on", t.dataset.tab===tab));
+  if(tab==="flows") renderFlows();
+}
+
+function renderFlows(){
+  const body = document.getElementById("asideBody");
+  if(!document.querySelector('.aside-tab[data-tab="flows"]').classList.contains("on")) return;
+  body.innerHTML = DATA.flows.map(f=>`
+    <div class="flow-item ${activeFlow===f.id?'on':''}" data-flow="${f.id}">
+      <div class="ftitle"><span class="dot" style="background:${f.color}"></span>${f.title}<span class="fcount">${f.steps.length} steps</span></div>
+      <div class="fdesc">${f.desc}</div>
+    </div>
+  `).join("");
+  body.querySelectorAll(".flow-item").forEach(el=>{
+    el.addEventListener("click", ()=>selectFlow(el.dataset.flow));
+  });
+}
+
+function showDetailForNode(n){
+  const body = document.getElementById("asideBody");
+  const incoming = DATA.edges.filter(([a,b])=>b===n.id).map(([a])=>byId[a].label);
+  const outgoing = DATA.edges.filter(([a,b])=>a===n.id).map(([,b])=>byId[b].label);
+  body.innerHTML = `
+    <div class="detail-phase">${PHASES[n.phase].name}</div>
+    <div class="detail-title">${n.label}</div>
+    <div class="detail-row">
+      <div class="detail-label">Focus</div>
+      <div class="detail-val">${n.sub}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Comes after</div>
+      <div class="detail-val">${incoming.length ? incoming.map(l=>`<span class="chip">${l}</span>`).join("") : "Nothing — starting point."}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Leads to</div>
+      <div class="detail-val">${outgoing.length ? outgoing.map(l=>`<span class="chip">${l}</span>`).join("") : "End of the mapped chain."}</div>
+    </div>
+  `;
+}
+
+function showDetailForFlow(f){
+  switchTab("detail");
+  const body = document.getElementById("asideBody");
+  body.innerHTML = `
+    <div class="detail-phase" style="color:${f.color}">Flow</div>
+    <div class="detail-title">${f.title}</div>
+    <div class="detail-row">
+      <div class="detail-label">Purpose</div>
+      <div class="detail-val">${f.desc}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Path (${f.steps.length} steps)</div>
+      <div class="detail-val">${f.steps.map((s,i)=>`<span class="chip">${i+1}. ${byId[s].label}</span>`).join("")}</div>
+    </div>
+  `;
+  switchTab("flows");
+  renderFlows();
+}
+
+document.querySelectorAll(".aside-tab").forEach(t=>{
+  t.addEventListener("click", ()=>{
+    switchTab(t.dataset.tab);
+    if(t.dataset.tab==="detail" && !activeNode && !activeFlow){
+      document.getElementById("asideBody").innerHTML = `<div class="detail-empty">Select a node in the diagram, or a flow on the left, to trace the path through the roadmap.</div>`;
+    }
+  });
+});
+
+document.getElementById("resetBtn").addEventListener("click", resetView);
+
+document.getElementById("jsonBtn").addEventListener("click", ()=>{
+  const exportData = {
+    nodes: DATA.nodes.map(n=>({id:n.id, phase:n.phase, label:n.label, sub:n.sub})),
+    edges: DATA.edges.map(([from,to])=>({from,to})),
+    flows: DATA.flows.map(f=>({id:f.id, title:f.title, description:f.desc, steps:f.steps}))
+  };
+  const text = JSON.stringify(exportData, null, 2);
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById("jsonBtn");
+    const original = btn.textContent;
+    btn.textContent = "Copied";
+    setTimeout(()=>{btn.textContent = original;}, 1400);
+  }).catch(()=>{
+    alert(text);
+  });
+});
+
+resetView();
+</script>
+
+</body>
+</html>

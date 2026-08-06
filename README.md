@@ -25,7 +25,7 @@ Personal learning journey from JavaScript fundamentals to production-ready front
 3. Prefer deep understanding over speed.
 
 ## Progress
-- [ ] Phase 1: JavaScript Foundations
+- [x] Phase 1: JavaScript Foundations
 - [ ] Phase 2: DOM & Browser
 - [ ] Phase 3: Async + APIs
 - [ ] Phase 4: Tooling
