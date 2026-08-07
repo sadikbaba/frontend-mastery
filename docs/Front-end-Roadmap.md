@@ -564,8 +564,8 @@ Part-time: 14–18 months.
 Anyone promising “job-ready in 3 months” is selling something.
 
 ## Portfolio Checklist
-- [ ] Pure JS foundations project  
-- [ ] Vanilla DOM interactive app  
+- [x] Pure JS foundations project  
+- [x] Vanilla DOM interactive app  
 - [ ] Public API consumer app (async mastery)  
 - [ ] Multiple React applications  
 - [ ] Full-stack app (Django + DRF + React) with auth  
@@ -576,20 +576,20 @@ Anyone promising “job-ready in 3 months” is selling something.
 - [ ] Architecture notes on full-stack projects  
 
 ## GitHub Project Checklist (for every serious repo)
-- [ ] Professional README  
-- [ ] Live demo link  
-- [ ] Screenshots / short video  
-- [ ] Tech stack  
-- [ ] Setup instructions  
-- [ ] Design / architecture decisions  
-- [ ] Accessibility notes  
-- [ ] License  
-- [ ] Clean commit history  
-- [ ] No secrets  
+- [x] Professional README  
+- [x] Live demo link  
+- [x] Screenshots / short video  
+- [x] Tech stack  
+- [x] Setup instructions  
+- [x] Design / architecture decisions  
+- [x] Accessibility notes  
+- [x] License  
+- [x] Clean commit history  
+- [x] No secrets  
 
 ## Interview Preparation Checklist
-- [ ] Explain closures, prototypes, and `this` clearly  
-- [ ] Walk through the event loop  
+- [x] Explain closures, prototypes, and `this` clearly  
+- [x] Walk through the event loop  
 - [ ] Explain React reconciliation and keys  
 - [ ] Discuss when you would and would not use a backend  
 - [ ] Explain your auth flow and token handling  
