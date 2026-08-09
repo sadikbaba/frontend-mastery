@@ -27,6 +27,13 @@ function findTodo(id) {
   return todo;
 }
 
+function completeTodo(id) {
+  const todo = findTodo(id);
+
+  todo.completed = true;
+
+  return todo;
+}
 
 addTodo("Learn JavaScript");
 addTodo("Learn React");
@@ -34,4 +41,8 @@ addTodo("Learn Vue");
 console.log(getTodos());
 
 console.log("\n____find todo____");
-console.log("your todo is: ", findTodo(77));
+console.log("your todo is: ", findTodo(2));
+
+console.log("\n____complete todo____");
+console.log(completeTodo(2));
+console.log(getTodos());
