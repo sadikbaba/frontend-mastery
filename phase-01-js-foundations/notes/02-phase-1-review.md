@@ -1,8 +1,8 @@
-# Phase 1 — JavaScript Foundations Review
+# Phase 1 JavaScript Foundations Review
 
 ## Status
 
-**Phase:** 1 — JavaScript Foundations
+**Phase:** 1  JavaScript Foundations
 **Status:** Complete ✅
 
 ---
@@ -282,4 +282,4 @@ Phase 1 is complete.
 
 The main remaining work was documentation and the Expense Tracker reinforcement. The Todo project is complete and was successfully rebuilt from memory.
 
-**Next:** Phase 2 — DOM & Browser.
+**Next:** Phase 2  DOM & Browser.
