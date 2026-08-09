@@ -23,11 +23,10 @@ function findTodo(id) {
   if (!todo) {
     throw Error("Todo not found");
   }
-  else {
-    return todo;
-  }
 
+  return todo;
 }
+
 
 addTodo("Learn JavaScript");
 addTodo("Learn React");
