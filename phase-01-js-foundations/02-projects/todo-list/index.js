@@ -89,6 +89,18 @@ function sortTodosByNewest() {
   return [...todos].sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
+function getTodosByStatus(completed) {
+  return todos.filter((todo) => todo.completed === completed);
+}
+
+function updateTodoTitle(id, newTitle) {
+  const todo = findTodo(id);
+
+  todo.title = newTitle;
+
+  return todo;
+}
+
 console.log("\n____add todo____");
 addTodo("Learn JavaScript");
 addTodo("Learn Vue");
@@ -144,3 +156,12 @@ console.log(sorted);
 console.log("\n sort todo ");
 const sortedByNewest = sortTodosByNewest();
 console.log(sortedByNewest);
+
+
+console.log("\n sort todo ");
+const sortedByStatus = getTodosByStatus(true);
+console.log(sortedByStatus);
+
+console.log("\n update todo ");
+console.log(updateTodoTitle(1, "Master JavaScript"));
+console.log(getTodos());
