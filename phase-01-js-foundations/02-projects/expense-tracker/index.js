@@ -1,8 +1,9 @@
 const expenses = [];
+let nextId = 1;
 
 function addExpense(description, amount, category) {
   const expense = {
-    id: expenses.length + 1,
+    id: nextId ++,
     description,
     amount,
     category,
@@ -12,7 +13,7 @@ function addExpense(description, amount, category) {
 }
 
 function listExpenses() {
-  return expenses;
+  return [...expenses];
 }
 
 function filterByCategory(category) {
