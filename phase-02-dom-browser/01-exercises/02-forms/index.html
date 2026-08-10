@@ -1,15 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Forms Practice</title>
-</head>
-<body>
-  <h1>Live Greeting</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Forms Practice</title>
+  </head>
+  <body>
+    <h1>Live Greeting</h1>
 
-  <input type="text" id="nameInput" placeholder="Type your name" />
-  <p id="output">Hello, stranger</p>
+    <form action="#">
+      <fieldset>
+        <legend>Live Greeting</legend>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+      </fieldset>
 
-  <script src="app.js"></script>
-</body>
+      <button type="submit">sumbit</button>
+
+      <p id="output">out put</p>
+    </form>
+
+    <script src="app.js"></script>
+  </body>
 </html>

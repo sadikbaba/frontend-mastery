@@ -1,12 +1,14 @@
-const input = document.querySelector("#nameInput");
+const form = document.querySelector("form");
+const input = document.querySelector("#name");
 const output = document.querySelector("#output");
 
-input.addEventListener("input", function () {
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
   const name = input.value.trim();
 
   if (name === "") {
-    output.textContent = "Hello stranger";
-  } else {
-    output.textContent = "Hello, " + name;
+    output.textContent = "Please enter your name";
+    return;
   }
+  output.textContent = `Hello, ${name}`;
 });
