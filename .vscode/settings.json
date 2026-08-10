@@ -1,0 +1,5 @@
+{
+  "editor.acceptSuggestionOnCommitCharacter": true,
+  "editor.inlineSuggest.edits.allowCodeShifting": "horizontal",
+  "editor.inlineSuggest.suppressSuggestions": true
+}
