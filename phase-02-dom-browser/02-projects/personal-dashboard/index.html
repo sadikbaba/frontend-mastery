@@ -3,25 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personal Dashboard</title>
+    <!--<link rel="icon" href="favicon.ico">-->
     <link rel="stylesheet" href="styles.css" />
+    <title>Personal Dashboard</title>
   </head>
   <body>
-    <div class="container">
-      <h1>Personal Dashboard</h1>
+    <header class="header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggel" aria-label="Menu toggle">
+          &equiv;
+        </button>
+        <h1>Dashboard</h1>
+      </div>
+      <div class="header-right">
+        <span>Sadik</span>
+        <div class="avatar">👤</div>
+      </div>
+    </header>
 
-      <form id="noteForm">
-        <input
-          type="text"
-          id="noteInput"
-          placeholder="Write a note..."
-          required
-        />
-        <button type="submit">Add Note</button>
-      </form>
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <nav>
+          <ul>
+            <li class="active"><a href="#">Overview</a></li>
+            <li><a href="#">Tasks</a></li>
+            <li><a href="#">Calendar</a></li>
+            <li><a href="#">Notes</a></li>
+            <li><a href="#">Settings</a></li>
+          </ul>
+        </nav>
+      </aside>
 
-      <ul id="notesList"></ul>
+      <main class="main">
+        <section class="welcome">
+          <h2>Welcome back, <span id="userName">Sadik</span> 👋</h2>
+          <p class="date" id="currentDate"></p>
+        </section>
+
+        <section class="stats">
+          <h3 class="section-title">Overview</h3>
+          <span>Today</span>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-number" id="totalTasks">0</span>
+              <span class="stat-label">Tasks</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number" id="completedTasks">0</span>
+              <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number" id="pendingTasks">0</span>
+              <span class="stat-label">Pending</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Tasks -->
+        <section class="tasks-section">
+          <h3 class="section-title">Recent Tasks</h3>
+          <ul class="task-list" id="taskList">
+            <!-- Tasks will be rendered by JavaScript -->
+          </ul>
+
+          <!-- Add Task Area -->
+          <form class="add-task-form" id="addTaskForm">
+            <input
+              type="text"
+              id="taskInput"
+              placeholder="What needs to be done?"
+              required
+              autocomplete="off"
+            />
+            <button type="submit" class="btn btn-primary">+ Add Task</button>
+          </form>
+        </section>
+      </main>
     </div>
+
+    <footer class="footer">
+      <p>&copy; 2026 Personal Dashboard</p>
+    </footer>
 
     <script src="app.js"></script>
   </body>
