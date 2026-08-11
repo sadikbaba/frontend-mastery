@@ -28,16 +28,26 @@ addTaskForm.addEventListener("submit", function (event) {
   const task = taskInput.value.trim();
 
   if (task !== "") {
+    // variables
     const li = document.createElement("li");
     const span = document.createElement("span");
     const taskActions = document.createElement("div");
+    const completeButton = document.createElement("button");
 
     span.textContent = task;
     li.appendChild(span);
     taskList.appendChild(li);
-
     taskInput.value = "";
     totalTasks.textContent = taskList.children.length;
+
+    // tasks action
+    taskActions.classList.add("task-actions");
+    li.appendChild(taskActions);
+
+    // complete button
+    completeButton.classList.add("btn-complete");
+    completeButton.textContent = "Complete";
+    taskActions.appendChild(completeButton);
   }
 });
 
