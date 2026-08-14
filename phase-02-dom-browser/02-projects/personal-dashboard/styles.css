@@ -46,12 +46,32 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
-  background: var(--bg);
-  color: var(--text);
+
   min-height: 100vh;
   line-height: 1.5;
   display: flex;
   flex-direction: column;
+
+  background: white;
+  color: #111;
+}
+
+body.light {
+  background: white;
+  color: #111;
+}
+
+body.dark {
+  background: var(--bg);
+  color: white;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  body:not(.light):not(.dark) {
+    background: var(--bg);
+    color: var(--text);
+  }
 }
 
 /* ========== HEADER ========== */
@@ -111,7 +131,7 @@ body {
 }
 
 /* ========== SIDEBAR ========== */
-.sidebar {
+.sidebar , .themeSelect {
   width: 240px;
   background-color: var(--card-bg);
   border-right: 1px solid var(--border);

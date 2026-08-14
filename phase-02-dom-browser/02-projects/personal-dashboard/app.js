@@ -11,6 +11,27 @@ const pendingTasks = document.querySelector("#pendingTasks");
 
 // 2. DATA / STATE
 
+const themeSelect = document.querySelector("#themeSelect");
+
+themeSelect.addEventListener("change", function () {
+  const theme = themeSelect.value;
+
+  // Your code here
+  if (theme === "light") {
+    document.body.classList.remove("dark");
+    document.body.classList.add("light");
+  }
+
+  if (theme === "dark") {
+    document.body.classList.remove("light");
+    document.body.classList.add("dark");
+  }
+
+  if (theme === "system") {
+    document.body.classList.remove("light", "dark");
+  }
+});
+
 function getTasks() {
   const savedTasks = localStorage.getItem("tasks");
 
