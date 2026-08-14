@@ -1,0 +1,119 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+
+  background-color: #111;
+  color: #fff;
+
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+}
+
+.container {
+  background-color: #222;
+  border: 1px solid #111;
+
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px 16px;
+
+  border-radius: 16px;
+
+  max-width: 800px;
+  min-width: 460px;
+
+  margin-bottom: 24px;
+}
+
+.title {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+#todo-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#todo-form #todo-input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  outline: none;
+  flex: 4;
+
+  background-color: #fff;
+}
+
+#todo-form #todo-input:focus {
+  border: 1px solid blue;
+
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+}
+
+#todo-form .btn {
+  background-color: transparent;
+  color: blue;
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  flex: 1;
+  border: 2px solid blue;
+  cursor: pointer;
+
+  outline: none;
+
+  transition: 0.2s;
+
+  font-size: 1rem;
+}
+#todo-form .btn:focus {
+  border: 2px solid rgb(179, 179, 201);
+}
+
+#todo-form .btn:hover {
+  background-color: blue;
+  color: white;
+
+  transform: translateY(-2px);
+  transition: 0.2s;
+}
+/* DOM  Codes  */
+
+#todo-list {
+  max-width: 460px;
+  min-width: 460px;
+
+  list-style: none;
+
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.todo-item {
+  width: 100%;
+  background-color: #222;
+  border: 1px solid #111;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+  padding: 8px 16px;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
