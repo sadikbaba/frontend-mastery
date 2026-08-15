@@ -15,7 +15,7 @@ function waitTwoSeconds() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve("Hello from Promise!");
-    }, 20000);
+    }, 5000);
   });
 }
 
@@ -32,24 +32,62 @@ start();
 
 // exercise
 function getData() {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve("Data received!");
+      const success = false;
+
+      if (success) {
+        resolve("Data received!");
+      } else {
+        reject("Failed to get data");
+      }
     }, 1500);
   });
 }
 
 // Convert this part to async/await
-getData().then((result) => {
-  console.log(result);
-});
+getData()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-// coverting done 
+// coverting done
 async function start_() {
-  const result = await getData();
-
-  console.log(result);
+  try {
+    const result = await getData();
+    console.log(result);
+  } catch (error) {
+    console.log("Error:", error);
+  }
 }
 
-
 start_();
+
+function getData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Change to true or false to test
+      const success = false;
+
+      if (success) {
+        resolve("Data received!");
+      } else {
+        reject("Failed to get data");
+      }
+    }, 1500);
+  });
+}
+
+async function start() {
+  try {
+    const result = await getData();
+    console.log(result);
+  } catch (error) {
+    console.log("Error:", error);
+  }
+}
+
+start();
