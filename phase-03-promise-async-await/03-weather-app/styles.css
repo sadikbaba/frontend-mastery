@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --text-color: #333;
+  --bg: #f4f4f4;
+  --card-color: #fff;
+  --border-color: #ccc;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --text-muted: #999;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: var(--bg);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 8px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px; /* better than 800px for a todo */
+  margin-bottom: 24px;
+}
+
+form {
+  min-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 16px;
+  border-radius: 16px;
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+fieldset {
+  border: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+legend {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-color);
+  text-align: center;
+}
+
+input {
+  padding: 12px 16px;
+  font-size: 1.2rem;
+  border-radius: 16px;
+  border: 1px solid gray;
+  background-color: var(--bg);
+  color: var(--text-color);
+  width: 100%;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--text-color);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 1.2rem;
+  border-radius: 16px;
+  border: none;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+
+  font-weight: 600;
+  transition: 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+
+  margin-top: 16px;
+  margin-bottom: -4px;
+}
+
+button:hover {
+  background-color: darkgreen;
+  transition: 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.result {
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 1.2rem;
+
+  color: var(--text-color);
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
