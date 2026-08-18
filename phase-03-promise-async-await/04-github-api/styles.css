@@ -115,7 +115,7 @@ main {
   border: 1px solid var(--border);
   outline: none;
   color: white;
-  font-size: 0.8rem;
+  font-size: 16px;
   background-color: var(--border);
   width: 100%;
 }
