@@ -3,12 +3,12 @@
 Personal learning journey from JavaScript fundamentals to production-ready frontend engineering.
 
 ## Current Focus
-**Phase 1  JavaScript Foundations**
+**Phase 3 — Asynchronous JavaScript & Public APIs**
 
 ## Structure
 - `phase-01-js-foundations/` → Language fundamentals
 - `phase-02-dom-browser/` → DOM & Browser APIs
-- `phase-03-async-apis/` → Asynchronous JS & Public APIs
+- `phase-03-promise-async-await/` → Asynchronous JS & Public APIs
 - `phase-04-tooling/` → Modules, Vite, tooling
 - `phase-05-react/` → React foundations
 - `phase-06-fullstack/` → Django + DRF + React
@@ -27,9 +27,13 @@ Personal learning journey from JavaScript fundamentals to production-ready front
 ## Progress
 - [x] Phase 1: JavaScript Foundations
 - [x] Phase 2: DOM & Browser
-- [ ] Phase 3: Async + APIs
+- [x] Phase 3: Async + APIs
 - [ ] Phase 4: Tooling
 - [ ] Phase 5: React
 - [ ] Phase 6: Full-Stack
 - [ ] Phase 7: React Native
 - [ ] Phase 8: Production
+
+## Current Phase 3 Project
+
+- [GitHub + Country Explorer](phase-03-promise-async-await/04-github-api/README.md) — GitHub profile search, location geocoding, country data, loading/error states, and local caching.

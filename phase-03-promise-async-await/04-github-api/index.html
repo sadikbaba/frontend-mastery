@@ -3,10 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Tangerine"
-    />
     <meta
       name="description"
       content="Search GitHub users and explore country information based on their profile location."
@@ -31,7 +27,9 @@
 
     <header>
       <h1>GitHub + Country Explorer</h1>
-      <button id="about" aria-label="About">i</button>
+      <button id="about" type="button" aria-expanded="false" aria-label="About">
+        i
+      </button>
     </header>
 
     <!-- 2 search bar in the form -->
@@ -52,11 +50,11 @@
 
       <!-- 5 show results -->
 
-      <section id="results" hidden>
+      <section id="results" aria-live="polite" hidden>
         <!-- 5.1 container user of retuslts -->
-        <p id="status"></p>
+        <p id="status" role="status"></p>
 
-        <article id="user-results">
+        <article id="user-results" hidden>
           <div id="avatar-container-bio">
             <img src="" alt="Avatar" id="avatar" />
 
@@ -78,7 +76,7 @@
         </article>
 
         <!-- 5.2 contry container -->
-        <div id="country-results">
+        <div id="country-results" hidden>
           <p id="country"></p>
           <p id="capital-city"></p>
           <p id="population"></p>

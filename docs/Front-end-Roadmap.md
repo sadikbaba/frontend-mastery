@@ -566,7 +566,7 @@ Anyone promising “job-ready in 3 months” is selling something.
 ## Portfolio Checklist
 - [x] Pure JS foundations project  
 - [x] Vanilla DOM interactive app  
-- [ ] Public API consumer app (async mastery)  
+- [x] Public API consumer app (async mastery)  
 - [ ] Multiple React applications  
 - [ ] Full-stack app (Django + DRF + React) with auth  
 - [ ] React Native version of at least one app  

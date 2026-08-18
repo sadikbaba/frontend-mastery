@@ -47,10 +47,6 @@ header {
   position: sticky;
   top: 0;
   background-color: var(--bg);
-  cursor: pointer;
-
-  min-width: 400px;
-
   transition: 0.3s;
 }
 
@@ -89,7 +85,7 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  min-width: 350px;
+  padding: 0 16px;
 }
 
 #search-form {
@@ -138,6 +134,14 @@ main {
   color: var(--bg);
   font-weight: 600;
   transition: 0.3s;
+  cursor: pointer;
+}
+
+#search-btn:disabled,
+#clear-btn:disabled {
+  cursor: wait;
+  opacity: 0.6;
+  transform: none;
 }
 
 #search-btn {
@@ -190,6 +194,11 @@ footer .link:hover {
   display: none;
 }
 
+#user-results[hidden],
+#country-results[hidden] {
+  display: none;
+}
+
 #results {
   display: flex;
   flex-direction: column; /* default for large screens */
@@ -207,6 +216,19 @@ footer .link:hover {
   transition: 0.9s;
 }
 
+#status {
+  min-height: 1.25rem;
+  color: var(--third-color);
+}
+
+#status[data-state="error"] {
+  color: tomato;
+}
+
+#status[data-state="notice"] {
+  color: var(--text-muted);
+}
+
 #user-results {
   background-color: var(--card-bg);
   padding: 16px;
@@ -218,7 +240,7 @@ footer .link:hover {
   flex-direction: column;
 
   gap: 16px;
-
+  margin-top: -24px;
   transition: 0.3s;
 }
 
@@ -398,6 +420,27 @@ img:hover {
   #user-results {
     transition: 0.3s;
     width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    width: 100%;
+    padding: 8px 16px;
+  }
+
+  #search-form {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  #search-input {
+    flex-basis: 100%;
+  }
+
+  #avatar-container-bio {
+    align-items: flex-start;
+    gap: 16px;
   }
 }
 /* =========================
