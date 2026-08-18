@@ -37,7 +37,7 @@ function formatNumber(value) {
 }
 
 function displayUser(user) {
-  usernamePlaceholder.textContent = `GitHub username: ${user.login}`;
+  usernamePlaceholder.textContent = `GitHub: ${user.login}`;
   namePlaceholder.textContent = `Name: ${user.name ?? "Not provided"}`;
   bioPlaceholder.textContent = `Bio: ${user.bio ?? "Not provided"}`;
   avatarPlaceholder.src = user.avatar_url;
