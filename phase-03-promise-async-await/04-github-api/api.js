@@ -37,12 +37,11 @@ async function getUserFromGithub(username) {
 // population;
 // region;
 
-
-
-
 // Fetch country information using the country name.
 async function getCountryInfo(country) {
-  const API = `https://restcountries.com/v3.1/name/${country}`;
+  const encodedCountry = encodeURIComponent(country);
+
+  const API = `https://restcountries.com/v3.1/name/${encodedCountry}`;
 
   try {
     const response = await fetch(API);

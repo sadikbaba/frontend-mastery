@@ -5,6 +5,9 @@
 // Get the About button and results container.
 const aboutButton = document.querySelector("#about");
 const resultContainer = document.querySelector("#results");
+const userResults = document.querySelector("#user-results");
+const countryResults = document.querySelector("#country-results");
+let hasSearchResult = Boolean(localStorage.getItem("user"));
 
 // Create the About heading.
 const heading = document.createElement("h2");
@@ -28,9 +31,6 @@ githubLink.textContent = "Visit SadikBaba GitHub Profile";
 githubLink.target = "_blank";
 githubLink.rel = "noopener noreferrer";
 
-// Save the original result elements so they can be restored later.
-const originalMainContent = Array.from(resultContainer.children);
-
 // Create the About container.
 const aboutText = document.createElement("div");
 aboutText.classList.add("about-content");
@@ -41,11 +41,11 @@ aboutText.append(heading, paragraph, githubLink);
 // Toggle between the search results and About information.
 aboutButton.addEventListener("click", function () {
   if (resultContainer.contains(aboutText)) {
-    // Restore the original search results.
-    resultContainer.replaceChildren(...originalMainContent);
+    resultContainer.replaceChildren(status, userResults, countryResults);
+    resultContainer.hidden = !hasSearchResult;
   } else {
-    // Show the About information.
     resultContainer.replaceChildren(aboutText);
+    resultContainer.hidden = false;
   }
 });
 
@@ -79,16 +79,38 @@ const status = document.querySelector("#status");
 // Clear the search input and username placeholder.
 clearButton.addEventListener("click", function () {
   searchInput.value = "";
+  hasSearchResult = false;
+
+  resultContainer.hidden = true;
+
   usernamePlaceholder.textContent = "";
-  resultContainer.replaceChildren("");
+  namePlaceholder.textContent = "";
+  bioPlaceholder.textContent = "";
+  avatarPlaceholder.src = "";
+  avatarPlaceholder.alt = "GitHub user avatar";
+
+  locationPlaceholder.textContent = "";
+  followersPlaceholder.textContent = "";
+  followingPlaceholder.textContent = "";
+  repositoriesPlaceholder.textContent = "";
+
+  countryName.textContent = "";
+  countryCapital.textContent = "";
+  countryPopulation.textContent = "";
+  countryRegion.textContent = "";
+
+  status.textContent = "";
+
+  localStorage.removeItem("user");
 });
 
 // Add an event listener to the search form.
 searchForm.addEventListener("submit", async function (event) {
   event.preventDefault();
-
   status.textContent = "Loading...";
   status.style.color = "#b5a5ff";
+
+  resultContainer.hidden = false;
 
   const username = searchInput.value.trim();
   if (username === "") {
@@ -101,6 +123,9 @@ searchForm.addEventListener("submit", async function (event) {
     if (!user) {
       throw new Error("User not found");
     }
+
+    hasSearchResult = true;
+    resultContainer.hidden = false;
 
     usernamePlaceholder.textContent = `Full Name: ${user.login}`; //user.login;
     namePlaceholder.textContent = `Name: ${user.name}`; //user.name;
@@ -119,8 +144,6 @@ searchForm.addEventListener("submit", async function (event) {
     followingPlaceholder.textContent = `${user.following} Following`;
     repositoriesPlaceholder.textContent = `${user.public_repos} Repositories`;
 
-    resultContainer.replaceChildren(...originalMainContent);
-
     // Fetch country information
 
     // Country data we need:
@@ -128,28 +151,85 @@ searchForm.addEventListener("submit", async function (event) {
     // capital;
     // population;
     // region;
-    const country = await getCountryInfo(user.location);
-    if (!country) {
-      throw new Error("Country not found");
+    let countryIndex = null;
+    if (user.location) {
+      const country = await getCountryInfo(user.location);
+
+      if (!country || country.length === 0) {
+        throw new Error("Country not found");
+      }
+
+      countryIndex = country[0];
+
+      countryName.textContent = `Country: ${countryIndex.name.common}`;
+      countryCapital.textContent = `Capital: ${countryIndex.capital?.[0] ?? "Not available"}`;
+      countryPopulation.textContent = `Population: ${countryIndex.population}`;
+      countryRegion.textContent = `Region: ${countryIndex.region}`;
+    } else {
+      countryName.textContent = "Country: Not available";
+      countryCapital.textContent = "Capital: Not available";
+      countryPopulation.textContent = "Population: Not available";
+      countryRegion.textContent = "Region: Not available";
     }
 
-    console.log(country);
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        user: user,
+        country: countryIndex,
+      }),
+    );
 
-    const countryIndex = country[0];
-
-    console.log(countryIndex);
-
-    countryName.textContent = `Country: ${countryIndex.name}`;
-    countryCapital.textContent = `Capital: ${countryIndex.capital}`;
-    countryPopulation.textContent = `Population: ${countryIndex.population}`;
-    countryRegion.textContent = `Region: ${countryIndex.region}`;
-
-    // Update the location, followers, following, and repositories
+    status.textContent = "";
   } catch (error) {
     status.textContent = "ERROR: " + error.message;
     status.style.color = "red";
   }
 
   searchInput.value = "";
-  status.textContent = "";
 });
+function getLocalStorage() {
+  const savedData = localStorage.getItem("user");
+
+  if (!savedData) {
+    return;
+  }
+
+  const data = JSON.parse(savedData);
+
+  const user = data.user;
+  const country = data.country;
+
+  usernamePlaceholder.textContent = `Full Name: ${user.login}`;
+  namePlaceholder.textContent = `Name: ${user.name}`;
+  bioPlaceholder.textContent = `Bio: ${user.bio}`;
+  avatarPlaceholder.src = user.avatar_url;
+
+  if (user.location) {
+    locationPlaceholder.textContent = `Location: ${user.location}`;
+    locationPlaceholder.style.color = "#bcadfb";
+  } else {
+    locationPlaceholder.textContent = "Location: Not specified";
+    locationPlaceholder.style.color = "tomato";
+  }
+
+  followersPlaceholder.textContent = `${user.followers} Followers`;
+  followingPlaceholder.textContent = `${user.following} Following`;
+  repositoriesPlaceholder.textContent = `${user.public_repos} Repositories`;
+
+  if (country) {
+    countryName.textContent = `Country: ${country.name.common}`;
+    countryCapital.textContent = `Capital: ${country.capital?.[0] ?? "Not available"}`;
+    countryPopulation.textContent = `Population: ${country.population}`;
+    countryRegion.textContent = `Region: ${country.region}`;
+  } else {
+    countryName.textContent = "Country: Not available";
+    countryCapital.textContent = "Capital: Not available";
+    countryPopulation.textContent = "Population: Not available";
+    countryRegion.textContent = "Region: Not available";
+  }
+
+  resultContainer.hidden = false;
+}
+
+getLocalStorage();

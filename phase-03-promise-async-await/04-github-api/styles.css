@@ -50,6 +50,8 @@ header {
   cursor: pointer;
 
   min-width: 400px;
+
+  transition: 0.3s;
 }
 
 #about {
@@ -119,6 +121,7 @@ main {
   color: white;
   font-size: 0.8rem;
   background-color: var(--border);
+  width: 100%;
 }
 
 #search-input:focus {
@@ -163,6 +166,8 @@ footer {
   font-size: small;
   color: var(--text-muted);
   margin: 24px 0;
+
+  transition: 0.3s;
 }
 footer .link {
   text-decoration: none;
@@ -181,6 +186,9 @@ footer .link:hover {
 
 /* DOM CSS */
 
+#results[hidden] {
+  display: none;
+}
 
 #results {
   display: flex;
@@ -195,6 +203,8 @@ footer .link:hover {
 
   border: 1px solid var(--border);
   border-radius: var(--radius);
+
+  transition: 0.9s;
 }
 
 #user-results {
@@ -208,6 +218,8 @@ footer .link:hover {
   flex-direction: column;
 
   gap: 16px;
+
+  transition: 0.3s;
 }
 
 #avatar-container-bio {
@@ -267,19 +279,19 @@ img:hover {
   font-size: 0.9rem;
   line-height: 1.4;
   font-weight: 400;
-
-  line-height: 1.4;
 }
 
 #following,
 #followers,
 #repositories {
-  font-size: 1.1rem;
   font-weight: 600;
-  font-size: medium;
+  font-size: 0.9rem;
   color: var(--third-color);
   cursor: pointer;
   transition: 0.3s;
+  width: 100%;
+
+  text-align: center;
 }
 
 #repo {
@@ -289,11 +301,13 @@ img:hover {
 
   gap: 8px;
   align-items: center;
+
   padding: 8px;
   border-radius: 8px;
   border: 1px solid var(--border);
   transition: 0.3s;
   cursor: pointer;
+  width: 100%;
 }
 #repo:hover {
   transition: 0.3s;
@@ -303,6 +317,7 @@ img:hover {
 #location {
   display: flex;
   flex-direction: row;
+  color: var(--third-color);
   gap: 8px;
   align-items: center;
   padding: 8px;
@@ -329,13 +344,60 @@ img:hover {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px;
+
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--text-muted);
 }
 /* When screen is 900px or smaller → switch to column */
 @media (max-width: 900px) {
   #results {
     width: 90%;
     flex-direction: column;
+    transition: 0.3s;
+  }
+
+  header {
+    font-size: 0.6rem;
+    padding-left: 32px;
+    width: 90%;
+
+    position: sticky;
+
+    margin-top: 24px;
+
+    top: 0;
+    z-index: 100;
+
+    transition: 0.3s;
+  }
+
+  header #about {
+    font-size: 1.5rem;
+    transition: 0.3s;
+    flex-shrink: 0;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  #following,
+  #followers,
+  #repositories {
+    font-size: 0.7rem;
+    transition: 0.3s;
+  }
+
+  footer {
+    font-size: 0.6rem;
+    text-align: center;
+    width: 90%;
+  }
+
+  #user-results {
+    transition: 0.3s;
+    width: 100%;
   }
 }
 /* =========================
