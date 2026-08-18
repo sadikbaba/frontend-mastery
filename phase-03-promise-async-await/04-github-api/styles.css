@@ -440,6 +440,29 @@ img:hover {
     width: 98%;
     flex-wrap: wrap;
   }
+
+  #username {
+    font-size: 0.9rem;
+    transition: 0.3s;
+  }
+
+  #name {
+    font-size: 0.8rem;
+    transition: 0.3s;
+  }
+
+  #bio {
+    font-size: 0.7rem;
+    transition: 0.3s;
+  }
+
+  #bio-container {
+    width: 100%;
+    gap: 8px;
+    transition: 0.3s;
+
+    flex: 5;
+  }
 }
 
 @media (max-width: 200px) {
