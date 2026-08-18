@@ -393,7 +393,7 @@ img:hover {
   header {
     font-size: 0.6rem;
     padding-left: 32px;
-    width: 90%;
+    width: 98%;
 
     position: sticky;
 
@@ -425,10 +425,20 @@ img:hover {
     text-align: center;
     width: 90%;
   }
-
+  #results {
+    width: 98%;
+    flex-direction: column;
+    transition: 0.3s;
+  }
   #user-results {
     transition: 0.3s;
     width: 100%;
+    padding: 8px 16px;
+  }
+
+  #search-form {
+    width: 98%;
+    flex-wrap: wrap;
   }
 }
 
@@ -450,6 +460,18 @@ img:hover {
   #avatar-container-bio {
     align-items: flex-start;
     gap: 16px;
+  }
+
+  #user-results {
+    transition: 0.3s;
+    width: 100%;
+    padding: 4px 8px;
+  }
+
+  #results {
+    width: 98%;
+    flex-direction: column;
+    transition: 0.3s;
   }
 }
 /* =========================

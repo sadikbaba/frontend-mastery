@@ -46,7 +46,7 @@ function displayUser(user) {
   locationPlaceholder.style.color = user.location ? "#bcadfb" : "tomato";
   followersPlaceholder.textContent = `${user.followers} Followers`;
   followingPlaceholder.textContent = `${user.following} Following`;
-  repositoriesPlaceholder.textContent = `${user.public_repos} Repositories`;
+  repositoriesPlaceholder.textContent = `${user.public_repos}  Repos`;
   userResults.hidden = false;
 }
 
@@ -182,14 +182,20 @@ searchForm.addEventListener("submit", async (event) => {
       try {
         country = await getCountryInfo(user.location);
       } catch (error) {
-        setStatus(`Profile found. Country details unavailable: ${error.message}`, "error");
+        setStatus(
+          `Profile found. Country details unavailable: ${error.message}`,
+          "error",
+        );
       }
     }
 
     displayCountry(country);
 
     if (!country && !status.textContent.includes("unavailable")) {
-      setStatus("Profile found. Country details are unavailable for this location.", "notice");
+      setStatus(
+        "Profile found. Country details are unavailable for this location.",
+        "notice",
+      );
     } else if (country) {
       setStatus();
     }
