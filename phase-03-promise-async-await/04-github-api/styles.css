@@ -442,14 +442,13 @@ img:hover {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 200px) {
   header {
     width: 100%;
     padding: 8px 16px;
   }
-
   #search-form {
-    width: 100%;
+    width: 98%;
     flex-wrap: wrap;
   }
 
