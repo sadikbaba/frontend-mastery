@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sadikbaba.github.io/frontend-mastery/sitemap.xml
