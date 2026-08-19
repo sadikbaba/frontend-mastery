@@ -1,7 +1,7 @@
-export function formatTemperature(temp) {
-  return `${temp}°C`;
+export function calculateSomething() {
+  return 100;
 }
 
-function calculateSomething() {
-  return 100;
+export function calculateSomethingElse() {
+  return calculateSomething() * 2;
 }
