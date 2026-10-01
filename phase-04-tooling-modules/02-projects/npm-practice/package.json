@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "sadikbaba",
   "license": "MIT",
   "devDependencies": {
+    "vite": "^8.3.2",
     "vitest": "^4.1.11"
   }
 }
