@@ -1,18 +1,4 @@
+import  { startApp } from './app.js';
 
-const decrementButton = document.getElementById('decrement');
-const incrementButton = document.getElementById('increment');
-const countElement = document.getElementById('count');
+startApp();
 
-let count = 0;
-
-decrementButton.addEventListener('click', () => {
-    count--;
-    countElement.innerText = count;
-});
-
-incrementButton.addEventListener('click', () => {
-    count++;
-    countElement.innerText = count;
-});
-
-countElement.textContent = count;
