@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "name": "task-tracker",
+  "version": "1.0.0",
+  "description": "an app that will track todo things and either completed or not",
+  "main": "src/main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadikbaba/frontend-mastery.git"
+  },
+  "author": "sadik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sadikbaba/frontend-mastery/issues"
+  },
+  "homepage": "https://github.com/sadikbaba/frontend-mastery#readme",
+  "devDependencies": {
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}

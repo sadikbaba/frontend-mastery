@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Tracker</title>
+
+ 
+  </head>
+  <body>
+    <main>
+      <form id="task-form">
+        <h1>Task Tracker</h1>
+
+        <label for="task-input">Task</label>
+        <input type="text" id="task-input" />
+
+        <button type="submit">Add Task</button>
+      </form>
+
+      <div class="result-container">
+        <button type="button" id="filter-all">All</button>
+        <button type="button" id="filter-active">Active</button>
+        <button type="button" id="filter-completed">Completed</button>
+
+        <ul id="task-list"></ul>
+      </div>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
