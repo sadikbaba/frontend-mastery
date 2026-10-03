@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debounce</title>
+ <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      main {
+        width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        height: 400px;
+        
+      }
+     
+    </style>
+   
+
+  </head>
+  <body>
+    <main>
+      <h1>Debounce</h1>
+      <p>
+        <label for="input">Type something in the input below:</label>
+      </p>
+      <input type="text" id="input" />
+      <div>
+        <p>Output:</p>
+        <p id="output"></p>
+      </div>
+    </main>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
