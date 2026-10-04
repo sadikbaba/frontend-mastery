@@ -15,7 +15,9 @@ if (savedWeather) {
     savedWeather.humidity,
     savedWeather.wind,
   );
-  renderStatus("Showing your last saved weather. Search again for the latest conditions.");
+  renderStatus(
+    "Showing your last saved weather. Search again for the latest conditions.",
+  );
 }
 
 searchForm.addEventListener("submit", async (event) => {
