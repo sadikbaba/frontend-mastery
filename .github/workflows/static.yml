@@ -33,11 +33,26 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: phase-04-tooling-modules/02-projects/weather-rebuild/package-lock.json
+      - name: Build weather app
+        working-directory: phase-04-tooling-modules/02-projects/weather-rebuild
+        run: |
+          npm ci
+          npm run build
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site/weather
+          cp -a phase-03-promise-async-await/04-github-api/. _site/
+          cp -a phase-04-tooling-modules/02-projects/weather-rebuild/dist/. _site/weather/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: './phase-03-promise-async-await/04-github-api'
+          path: './_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

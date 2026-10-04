@@ -51,5 +51,3 @@ export async function fetchWeather(city) {
     wind: weather.current.wind_speed_10m,
   };
 }
-
-console.log("the weather is:", await fetchWeather("Abuja"));

@@ -13,20 +13,30 @@ export function createWeatherCard(
   card.appendChild(h2);
 
   const p = document.createElement("p");
-  p.textContent = `temperature: ${temperature}°C`;
+  p.classList.add("temperature");
+  p.textContent = `${temperature}°C`;
   card.appendChild(p);
 
   const p2 = document.createElement("p");
-  p2.textContent = `description: ${description}`;
+  p2.classList.add("description");
+  p2.textContent = description;
   card.appendChild(p2);
 
-  const p3 = document.createElement("p");
-  p3.textContent = `humidity: ${humidity}%`;
-  card.appendChild(p3);
-
-  const p4 = document.createElement("p");
-  p4.textContent = `wind: ${wind} km/h`;
-  card.appendChild(p4);
+  const details = document.createElement("dl");
+  details.classList.add("weather-details");
+  for (const [label, value] of [
+    ["Humidity", `${humidity}%`],
+    ["Wind speed", `${wind} km/h`],
+  ]) {
+    const item = document.createElement("div");
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const detail = document.createElement("dd");
+    detail.textContent = value;
+    item.append(term, detail);
+    details.appendChild(item);
+  }
+  card.appendChild(details);
 
   return card;
 }

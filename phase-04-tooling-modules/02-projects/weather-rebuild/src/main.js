@@ -1,9 +1,22 @@
 import { fetchWeather } from "./api/weather.js";
 import { renderStatus, renderWeatherResult, clearStatus } from "./ui/render.js";
 import { formatWeatherCode } from "./utils/format.js";
+import { loadWeather, saveWeather } from "./utils/storage.js";
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
+
+const savedWeather = loadWeather();
+if (savedWeather) {
+  renderWeatherResult(
+    savedWeather.city,
+    savedWeather.temperature,
+    formatWeatherCode(savedWeather.weatherCode),
+    savedWeather.humidity,
+    savedWeather.wind,
+  );
+  renderStatus("Showing your last saved weather. Search again for the latest conditions.");
+}
 
 searchForm.addEventListener("submit", async (event) => {
   // 1. prevent page refresh
@@ -48,6 +61,8 @@ searchForm.addEventListener("submit", async (event) => {
     );
 
     // 8. clearStatus()
+    saveWeather(weather);
+    searchInput.value = "";
     clearStatus();
   } catch (error) {
     // 9. renderStatus(error.message)

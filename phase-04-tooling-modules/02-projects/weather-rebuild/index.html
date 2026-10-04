@@ -3,7 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather App</title>
+    <title>Weather App | Current Temperature, Humidity &amp; Wind</title>
+    <meta name="description" content="Check current weather by city with Weather App. Find temperature in Celsius, sky conditions, humidity, and wind speed in a simple, easy-to-read view." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0b1427" />
+
+    <link rel="canonical" href="https://sadikbaba.github.io/frontend-mastery/weather/" />
+    <meta property="og:url" content="https://sadikbaba.github.io/frontend-mastery/weather/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Weather App" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Weather App | Current Weather by City" />
+    <meta property="og:description" content="Find current temperature, sky conditions, humidity, and wind speed for your city." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@sadik_0x" />
+    <meta name="twitter:title" content="Weather App | Current Weather by City" />
+    <meta name="twitter:description" content="Find current temperature, sky conditions, humidity, and wind speed for your city." />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Weather App",
+        "url": "https://sadikbaba.github.io/frontend-mastery/weather/",
+        "author": {
+          "@type": "Person",
+          "name": "Sadik",
+          "sameAs": "https://x.com/sadik_0x"
+        },
+        "description": "Search by city to check current temperature, sky conditions, humidity, and wind speed.",
+        "applicationCategory": "WeatherApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript and an internet connection",
+        "inLanguage": "en"
+      }
+    </script>
 
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -11,20 +45,33 @@
     <main>
       <!-- heading -->
 
-      <h1 class="heading">Weather App</h1>
+      <header class="app-header">
+        <p class="eyebrow">YOUR DAILY SKY CHECK</p>
+        <h1 class="heading">Weather App<span>.</span></h1>
+        <p class="intro">A little clarity, whatever the weather.</p>
+      </header>
 
       <!-- search form -->
 
       <form id="search-form">
-        <input type="text" id="search-input" placeholder="Enter a city name" />
+        <label class="sr-only" for="search-input">City name</label>
+        <input type="search" id="search-input" name="city" placeholder="Enter a city name" autocomplete="off" />
         <button type="submit">Search</button>
       </form>
 
       <!-- loading/error status -->
-      <div id="status"></div>
+      <div id="status" role="status" aria-live="polite" aria-atomic="true"></div>
 
       <!-- weather result -->
-      <div id="weather-result"></div>
+      <div id="weather-result">
+        <div class="empty-state">
+          <span class="sky-symbol" aria-hidden="true">☀</span>
+          <h2>Every city has a story.</h2>
+          <p>Search for a city to check current temperature, sky conditions, humidity, and wind speed.</p>
+        </div>
+      </div>
+      <p class="app-footer">A fresh perspective on the forecast. Built by <a href="https://x.com/sadik_0x" target="_blank" rel="noopener noreferrer">Sadik</a>.</p>
+      <noscript><p>Enable JavaScript to search for a city and view its current weather.</p></noscript>
     </main>
 
     <script type="module" src="./src/main.js"></script>
