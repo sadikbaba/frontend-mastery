@@ -1,11 +1,15 @@
 const STORAGE_KEY = "weather-rebuild:last-weather";
 
 function isWeather(value) {
-  return value !== null && typeof value === "object" &&
-    typeof value.city === "string" && value.city.trim().length > 0 &&
-    ["temperature", "humidity", "weatherCode", "wind"].every(
-      (key) => Number.isFinite(value[key]),
-    );
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    typeof value.city === "string" &&
+    value.city.trim().length > 0 &&
+    ["temperature", "humidity", "weatherCode", "wind"].every((key) =>
+      Number.isFinite(value[key]),
+    )
+  );
 }
 
 export function loadWeather() {

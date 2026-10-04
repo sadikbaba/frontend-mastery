@@ -9,8 +9,6 @@
     "preview": "vite preview",
     "test": "vitest"
   },
-
-  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -18,7 +16,5 @@
     "vite": "^8.3.2",
     "vitest": "^5.0.3"
   },
-
-
   "type": "module"
 }
