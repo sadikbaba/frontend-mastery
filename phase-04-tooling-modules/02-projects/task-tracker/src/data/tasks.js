@@ -48,11 +48,16 @@ function toggleTask(id){
 
 }
 
+function setTasks(savedTasks) {
+  tasks = savedTasks;
+}
+
 
 export {
   getTasks,
   addTask,
   updateTask,
   deleteTask,
-  toggleTask
+  toggleTask,
+  setTasks,
 };
