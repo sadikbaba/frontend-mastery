@@ -49,6 +49,7 @@ jobs:
           mkdir -p _site/weather
           cp -a phase-03-promise-async-await/04-github-api/. _site/
           cp -a phase-04-tooling-modules/02-projects/weather-rebuild/dist/. _site/weather/
+          cp phase-04-tooling-modules/02-projects/weather-rebuild/public/robots.txt _site/robots.txt
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
