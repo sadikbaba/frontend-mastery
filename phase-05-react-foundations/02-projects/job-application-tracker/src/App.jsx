@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JobForm from "./components/JobForm.jsx";
 import JobList from "./components/JobList.jsx";
 
 function App() {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState(() => {
+    const savedJobs = localStorage.getItem("jobs");
+
+    if (savedJobs) {
+      return JSON.parse(savedJobs);
+    }
+
+    return [];
+  });
+
   const [selectedFilter, setSelectedFilter] = useState("All");
+  const [editingJob, setEditingJob] = useState(null);
 
   function addJob(newJob) {
     setJobs([...jobs, newJob]);
@@ -30,16 +40,41 @@ function App() {
     setJobs(updatedJobs);
   }
 
+  function startEditing(job) {
+    setEditingJob(job);
+  }
+
+  function updateJob(updatedJob) {
+    const updatedJobs = jobs.map((job) => {
+      if (job.id === updatedJob.id) {
+        return updatedJob;
+      }
+
+      return job;
+    });
+
+    setJobs(updatedJobs);
+    setEditingJob(null);
+  }
+
   const filteredJobs =
     selectedFilter === "All"
       ? jobs
       : jobs.filter((job) => job.status === selectedFilter);
 
+  useEffect(() => {
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+  }, [jobs]);
+
   return (
     <>
       <h1>Job Application Tracker</h1>
-
-      <JobForm onAddJob={addJob} />
+      <JobForm
+        key={editingJob?.id ?? "new"}
+        onAddJob={addJob}
+        editingJob={editingJob}
+        onUpdateJob={updateJob}
+      />
 
       <select
         value={selectedFilter}
@@ -55,6 +90,7 @@ function App() {
         jobs={filteredJobs}
         onDeleteJob={deleteJob}
         onUpdateJobStatus={updateJobStatus}
+        onEditJob={startEditing}
       />
     </>
   );

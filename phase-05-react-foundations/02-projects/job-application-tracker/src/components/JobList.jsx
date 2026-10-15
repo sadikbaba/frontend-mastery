@@ -1,6 +1,6 @@
 import JobCard from "./JobCard.jsx";
 
-function JobList({ jobs, onDeleteJob, onUpdateJobStatus }) {
+function JobList({ jobs, onDeleteJob, onUpdateJobStatus , onEditJob}) {
   return (
     <>
       <ul>
@@ -11,6 +11,7 @@ function JobList({ jobs, onDeleteJob, onUpdateJobStatus }) {
               job={job}
               onDeleteJob={onDeleteJob}
               onUpdateJobStatus={onUpdateJobStatus}
+              onEditJob={onEditJob}
             />
           );
         })}
