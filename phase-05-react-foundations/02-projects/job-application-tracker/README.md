@@ -1,16 +1,95 @@
-# React + Vite
+# Job Application Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React project for tracking job applications.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Add a job application
+- Delete a job
+- Change application status
+- Filter jobs by status
+- Edit an existing job
+- Save jobs with localStorage
+- Restore saved jobs after refresh
+- Automated tests with Vitest and React Testing Library
 
-## React Compiler
+## React Concepts Practiced
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Components
+- Props
+- useState
+- useEffect
+- Controlled forms
+- Lifting state up
+- Conditional rendering
+- Rendering lists
+- Keys
+- Immutable array updates
 
-## Expanding the ESLint configuration
+## Component Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `App.jsx` owns the shared jobs state
+- `JobForm.jsx` handles creating and editing jobs
+- `JobList.jsx` renders the list of jobs
+- `JobCard.jsx` renders one job and its actions
+
+## State Decisions
+
+The main `jobs` state lives in `App.jsx` because several components need access to it.
+
+`JobForm` receives functions through props to add or update jobs.
+
+The selected filter is stored in state, while `filteredJobs` is calculated from `jobs` and the selected filter.
+
+## Persistence
+
+Jobs are saved to `localStorage`.
+
+When the app starts, saved jobs are loaded back into React state.
+
+## Testing
+
+The project uses:
+
+- Vitest
+- React Testing Library
+- user-event
+- jsdom
+
+Tests cover:
+
+- Rendering the app
+- Adding a job
+- Deleting a job
+- Changing status
+- Filtering jobs
+- Editing a job
+- Restoring jobs from localStorage
+
+## Run the Project
+
+```bash
+npm install
+npm run dev
+```
+
+## Run Tests
+
+```bash
+npm test
+```
+
+## Check the Project
+
+```bash
+npm run lint
+npm run build
+```
+
+## What I Learned
+
+The biggest lesson from this project was understanding where state should live.
+
+Shared state belongs in the parent component when multiple child components need to read or change it.
+
+I also learned that tests should simulate how a real user interacts with the application instead of only checking internal implementation details.
