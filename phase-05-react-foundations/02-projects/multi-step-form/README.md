@@ -1,16 +1,110 @@
-# React + Vite
+# Multi-Step Developer Onboarding
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React project that guides a developer through a multi-step onboarding flow and shows the completed profile on a dashboard.
 
-Currently, two official plugins are available:
+## Project Flow
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Personal Details
+2. Developer Profile
+3. Job Preferences
+4. Review
+5. Dashboard
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Multi-step form navigation
+- Back and Continue controls
+- Shared form state across components
+- Controlled inputs
+- Required form fields
+- Job preference dropdown
+- Read-only review step
+- Final developer dashboard
+- Reusable review and dashboard item components
+- CSS styling with Flexbox and Grid
 
-## Expanding the ESLint configuration
+## Form Data
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The onboarding form collects:
+
+- Name
+- Email
+- Experience
+- Main stack
+- Preferred role
+- Work preference
+
+## Component Structure
+
+- `App.jsx` owns the shared form data and current step
+- `PersonalDetails.jsx` collects name and email
+- `DeveloperProfile.jsx` collects experience and stack
+- `JobPreferences.jsx` collects preferred role and work preference
+- `ReviewStep.jsx` displays all entered information before completion
+- `Dashboard.jsx` displays the completed developer profile
+
+## State Decisions
+
+`App.jsx` owns:
+
+- `formData`
+- `currentStep`
+
+The step components receive the data and navigation functions through props.
+
+This keeps the onboarding data available while moving forward and backward between steps.
+
+## React Concepts Practiced
+
+- Components
+- Props
+- `useState`
+- Controlled forms
+- Lifting state up
+- Conditional rendering
+- Function props
+- Updating object state with the spread operator
+- Computed property names
+- Reusable components
+
+## CSS Practiced
+
+The project also practices normal CSS with React using `className`.
+
+CSS concepts used include:
+
+- Flexbox
+- CSS Grid
+- Form styling
+- Primary and secondary buttons
+- Review layout
+- Dashboard cards
+- Spacing and basic visual hierarchy
+
+## Run the Project
+
+```bash
+npm install
+npm run dev
+```
+
+## Final Verification
+
+The complete flow was manually tested:
+
+- Step 1 to Step 2
+- Step 2 to Step 3
+- Step 3 to Review
+- Back navigation
+- Form values remain when moving between steps
+- Review displays the entered values
+- Complete Onboarding opens the Dashboard
+- Dashboard displays the completed profile
+
+## What I Learned
+
+The main lesson was how to manage one piece of shared state across multiple React components.
+
+The parent component owns the shared data and current step, while child components receive only the data and actions they need through props.
+
+I also practiced separating a larger interface into smaller components and using CSS to give different parts of the application their own layout and visual role.
