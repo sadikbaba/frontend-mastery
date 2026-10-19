@@ -103,8 +103,38 @@ The complete flow was manually tested:
 
 ## What I Learned
 
-The main lesson was how to manage one piece of shared state across multiple React components.
+I also learned how to test a complete React user flow rather than testing only isolated functions.
 
-The parent component owns the shared data and current step, while child components receive only the data and actions they need through props.
+I practiced rendering the application, querying accessible elements, simulating typing, clicking and selecting options, checking navigation between steps, and verifying that shared state survives component changes.
 
-I also practiced separating a larger interface into smaller components and using CSS to give different parts of the application their own layout and visual role.
+
+## Automated Testing
+
+The onboarding flow is tested with Vitest, React Testing Library, and `user-event`.
+
+The test suite verifies:
+
+- Personal Details renders as the first step
+- Completing Personal Details moves to Developer Profile
+- Completing Developer Profile moves to Job Preferences
+- Completing Job Preferences moves to Review
+- Completing Review moves to Dashboard
+- The Dashboard displays the submitted profile data
+- Back navigation works across the form
+- Form data is preserved when navigating backward
+
+### Testing Tools
+
+- Vitest test runner
+- jsdom browser-like DOM environment
+- React Testing Library renders and queries React components
+- `user-event`  simulates real user interactions
+- `jest-dom` provides DOM-specific assertions
+
+### Run Tests
+
+```bash
+npm test
+npm run lint
+npm run build
+```
