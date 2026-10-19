@@ -65,7 +65,7 @@ This is deliberate practice. Most people skip the “rebuild from memory” step
 #### 1. Values, Types, and Operators
 - **What it is:** The basic building blocks: numbers, strings, booleans, null, undefined, objects, symbols.  
 - **Why it exists:** Everything in JS is a value. Understanding types prevents 70% of beginner bugs.  
-- **Real-world analogy:** Different tools in a toolbox — you don’t use a hammer for screws.  
+- **Real-world analogy:** Different tools in a toolbox  you don’t use a hammer for screws.  
 - **Common mistakes:** Using `==` instead of `===`, not understanding `typeof null === "object"`, mutating primitives by accident.  
 - **Best practices:** Always use `===`. Prefer `const` by default. Know when something is a primitive vs reference.
 
@@ -78,7 +78,7 @@ This is deliberate practice. Most people skip the “rebuild from memory” step
 
 #### 3. Functions & `this`
 - **What it is:** First-class functions, arrow functions, call/apply/bind, `this` binding rules.  
-- **Why it exists:** Functions are values. `this` is dynamic — this is both power and pain.  
+- **Why it exists:** Functions are values. `this` is dynamic  this is both power and pain.  
 - **Real-world analogy:** A method is like a verb that changes meaning depending on who is speaking.  
 - **Common mistakes:** Losing `this` in callbacks, overusing arrow functions for methods, not understanding binding.  
 - **Best practices:** Know the four binding rules. Prefer arrow functions for callbacks, regular functions for methods when you need `this`.
@@ -94,11 +94,11 @@ This is deliberate practice. Most people skip the “rebuild from memory” step
 - **What it is:** Arrays, map/filter/reduce, for…of, destructuring, spread/rest.  
 - **Why it exists:** Data transformation is the daily work of frontend developers.  
 - **Common mistakes:** Mutating arrays when you should create new ones, overusing `forEach` when `map` is clearer.  
-- **Best practices:** Prefer immutable transformations. Learn reduce deeply — it is the Swiss Army knife.
+- **Best practices:** Prefer immutable transformations. Learn reduce deeply  it is the Swiss Army knife.
 
 ### Practice
 - Short exercises: Rewrite loops with map/filter/reduce. Implement your own `map` and `filter`.  
-- Coding exercises: Build a pure JS todo list (no DOM yet — just data + functions).  
+- Coding exercises: Build a pure JS todo list (no DOM yet  just data + functions).  
 - Thinking questions: Why does `this` behave differently in arrow functions? What problem do closures solve that objects alone cannot?  
 - Debugging exercises: Fix broken scope and `this` bugs deliberately introduced.
 
@@ -143,7 +143,7 @@ Build a pure JavaScript “Expense Tracker” core (no UI) with add, filter by c
 - Eloquent JavaScript (free book) – especially chapters 1–6  
 - You Don’t Know JS (book series) – deep but essential  
 - MDN JavaScript Guide  
-Avoid most YouTube “JS in 2 hours” videos — they create illusion of competence.
+Avoid most YouTube “JS in 2 hours” videos  they create illusion of competence.
 
 ---
 
@@ -181,7 +181,7 @@ Build:
 Not yet.
 
 ### Offline Support
-Yes — use localStorage. Explain limitations (size, no sync, security).
+Yes  use localStorage. Explain limitations (size, no sync, security).
 
 ### Deployment
 Netlify / Vercel / GitHub Pages.
@@ -392,13 +392,13 @@ Component decisions and why certain state lived where it did.
 Build a complete multi-step onboarding + dashboard in React. Rebuild the core from memory.
 
 **Where to learn:**
-- Official React docs (the new ones) — primary source  
+- Official React docs (the new ones)  primary source  
 - React.dev  
 - Avoid most older class-component tutorials
 
 ---
 
-# Phase 6: Real Full-Stack – Django + DRF + React
+# Phase 6: Real Full-Stack  Django + DRF + React
 
 ### Phase Overview
 - **Goal:** Learn when and how to build a real backend and connect it properly to a React frontend.  
@@ -409,7 +409,7 @@ Build a complete multi-step onboarding + dashboard in React. Rebuild the core fr
 ### Concepts
 - When you actually need a backend (brutally honest criteria)  
 - Django models, views, serializers (DRF)  
-- Authentication (Token / JWT / Session — choose one and master it)  
+- Authentication (Token / JWT / Session  choose one and master it)  
 - Permissions  
 - Pagination, filtering, search  
 - CORS  
@@ -435,7 +435,7 @@ Full authenticated React app talking to your DRF API.
 React Native version of the same app (Phase 7).
 
 ### Offline Support
-Yes — highly appropriate.  
+Yes  highly appropriate.  
 Use local storage/IndexedDB or a library (WatermelonDB / SQLite via Expo).  
 Sync strategy: last-write-wins or simple timestamp + conflict UI.
 
@@ -567,8 +567,8 @@ Anyone promising “job-ready in 3 months” is selling something.
 - [x] Pure JS foundations project  
 - [x] Vanilla DOM interactive app  
 - [x] Public API consumer app (async mastery)  
-- [ ] Multiple React applications  
-- [ ] Full-stack app (Django + DRF + React) with auth  
+- [x] Multiple React applications  
+- [x] Full-stack app (Django + DRF + React) with auth  
 - [ ] React Native version of at least one app  
 - [ ] One project with serious offline support  
 - [ ] Clear before/after or process documentation  
@@ -590,13 +590,13 @@ Anyone promising “job-ready in 3 months” is selling something.
 ## Interview Preparation Checklist
 - [x] Explain closures, prototypes, and `this` clearly  
 - [x] Walk through the event loop  
-- [ ] Explain React reconciliation and keys  
-- [ ] Discuss when you would and would not use a backend  
-- [ ] Explain your auth flow and token handling  
-- [ ] Discuss offline strategies and conflict resolution  
-- [ ] Whiteboard a simple component hierarchy  
-- [ ] Debug a broken async flow live  
-- [ ] Have 2–3 STAR stories about real projects  
+- [x] Explain React reconciliation and keys  
+- [x] Discuss when you would and would not use a backend  
+- [x] Explain your auth flow and token handling  
+- [x] Discuss offline strategies and conflict resolution  
+- [x] Whiteboard a simple component hierarchy  
+- [x] Debug a broken async flow live  
+- [x] Have 2–3 STAR stories about real projects  
 
 ## Free Learning Resources (High Signal Only)
 - JavaScript.info  
@@ -663,5 +663,5 @@ When you can take a blank editor and recreate the core of your best full-stack a
 
 Now go build.
 
-— Your Technical Mentor  
+ Your Technical Mentor  
 *Senior Software Engineer • Curriculum Designer • No-BS Edition*
