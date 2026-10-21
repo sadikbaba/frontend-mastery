@@ -1,5 +1,6 @@
 {
   "editor.acceptSuggestionOnCommitCharacter": true,
   "editor.inlineSuggest.edits.allowCodeShifting": "horizontal",
-  "editor.inlineSuggest.suppressSuggestions": true
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "python-envs.defaultEnvManager": "ms-python.python:system"
 }
