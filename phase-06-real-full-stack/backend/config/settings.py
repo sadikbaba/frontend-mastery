@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'applications'
+    'applications', 
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -136,5 +139,10 @@ MAILERS = {
 # #     "rest_framework_simplejwt.authentication.JWTAuthentication",
 # # ] 
 
-# "DEFAULT_PERMISSION_CLASSES" : ["rest_framework.permissions.isAuthenticated"]
+# "DEFAULT_PERMISSION_CLASSES" : ["rest_framework.permissions.IsAuthenticated"]
 # }
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
