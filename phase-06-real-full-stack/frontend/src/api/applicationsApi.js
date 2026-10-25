@@ -13,6 +13,10 @@ export async function updateApplication(id, updates) {
   return fetchHelper("PATCH", `${APPLICATIONS_URL}${id}/`, updates);
 }
 
+export async function deleteApplication(id) {
+  return fetchHelper("DELETE", `${APPLICATIONS_URL}${id}/`);
+}
+
 async function fetchHelper(method, url, body = null, extraHeaders = {}) {
   const headers = {
     ...extraHeaders,
@@ -22,7 +26,6 @@ async function fetchHelper(method, url, body = null, extraHeaders = {}) {
     method,
     headers,
   };
-
   // Only add body + Content-Type for methods that need it
   if (body && method !== "GET" && method !== "HEAD") {
     headers["Content-Type"] = "application/json";
@@ -35,5 +38,8 @@ async function fetchHelper(method, url, body = null, extraHeaders = {}) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
+  if (response.status === 204) {
+    return null;
+  }
   return response.json();
 }

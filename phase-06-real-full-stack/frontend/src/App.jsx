@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { getApplications } from "./api/applicationsApi";
-// import "./App.css";
+import "./App.css";
 
 import ApplicationForm from "./components/ApplicationForm";
 import ApplicationList from "./components/ApplicationList";
+import EditApplicationForm from "./components/EditApplicationForm";
 
 function App() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [currentView, setCurrentView] = useState("list");
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,20 +36,45 @@ function App() {
     ]);
   }
 
+  function handleApplicationUpdated(updatedApplication) {
+    setApplications((currentApplications) =>
+      currentApplications.map((application) => {
+        if (application.id === updatedApplication.id) {
+          return updatedApplication;
+        }
+        return application;
+      }),
+    );
+  }
+
+  function handleApplicationDeleted(deletedApplication) {
+    setApplications((currentApplications) =>
+      currentApplications.filter((application) => {
+        return application.id !== deletedApplication.id;
+      }),
+    );
+  }
+
+
   return (
     <>
       <main>
-        {error && <p>{error}</p>}
+        {!loading && currentView === "list" && error && <p>{error}</p>}
         {loading && <p>Loading applications...</p>}
 
         {!loading && !error && currentView === "list" && (
-          <ApplicationList applications={applications} />
+          <ApplicationList
+            applications={applications}
+            setCurrentView={setCurrentView}
+            setSelectedApplication={setSelectedApplication}
+            onDeleted={handleApplicationDeleted}
+          />
         )}
 
         {!loading &&
           !error &&
           applications.length === 0 &&
-          currentView !== "form" && <p>No applications yet.</p>}
+          currentView === "list" && <p>No applications yet.</p>}
 
         {currentView === "form" && (
           <ApplicationForm
@@ -56,9 +83,24 @@ function App() {
           />
         )}
         {currentView === "list" && (
-          <button type="button" onClick={() => setCurrentView("form")}>
-            Add Application
-          </button>
+          <div className="list-actions">
+            <button
+              type="button"
+              onClick={() => setCurrentView("form")}
+              className="add-button"
+            >
+              Add Application
+            </button>
+          </div>
+        )}
+
+        {currentView === "edit" && selectedApplication && (
+          <EditApplicationForm
+            formData={selectedApplication}
+            setFormData={setSelectedApplication}
+            setCurrentView={setCurrentView}
+            onUpdated={handleApplicationUpdated}
+          />
         )}
       </main>
     </>

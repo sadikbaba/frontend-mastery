@@ -18,60 +18,115 @@ function ApplicationForm({ onCreated, setCurrentView }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     const createdApplication = await createApplication(formData);
     onCreated(createdApplication);
     setCurrentView("list");
   }
 
   return (
-    <section>
-      <h1>Application Form</h1>
+    <section className="create-section">
+      <h1 className="create-title">Add Application</h1>
+      <p className="create-description">Track a new job application.</p>
 
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="company">Company</label>
-        <input
+      <form onSubmit={handleSubmit} className="create-form">
+        <LabelAndInput
           id="company"
-          type="text"
+          name="Company"
           value={formData.company}
-          onChange={(event) =>
-            setFormDataHelper(setFormData, "company", event, formData)
-          }
+          setFormData={setFormData}
+          formData={formData}
+          placeholder="Enter Company"
+          required
+          setFormDataHelper={setFormDataHelper}
+          labelClassName="create-form-label"
+          inputClassName="create-form-input"
         />
-        <label htmlFor="role">Role</label>
-        <input
+
+        <LabelAndInput
           id="role"
-          type="text"
+          name="Role"
           value={formData.role}
-          onChange={(event) =>
-            setFormDataHelper(setFormData, "role", event, formData)
-          }
+          setFormData={setFormData}
+          formData={formData}
+          placeholder="Enter Role"
+          required
+          setFormDataHelper={setFormDataHelper}
+          labelClassName="create-form-label"
+          inputClassName="create-form-input"
         />
-        <label htmlFor="status">Status</label>
-        <input
+
+        <LabelAndInput
           id="status"
-          type="text"
+          name="Status"
           value={formData.status}
-          onChange={(event) =>
-            setFormDataHelper(setFormData, "status", event, formData)
-          }
+          setFormData={setFormData}
+          formData={formData}
+          placeholder="Enter Status"
+          required
+          setFormDataHelper={setFormDataHelper}
+          labelClassName="create-form-label"
+          inputClassName="create-form-input"
         />
-        <label htmlFor="notes">Notes</label>
+
+        <label htmlFor="notes" className="create-form-label">
+          Notes
+        </label>
         <textarea
           id="notes"
           value={formData.notes}
           onChange={(event) =>
             setFormDataHelper(setFormData, "notes", event, formData)
           }
+          placeholder="Enter Notes"
+          className="create-form-textarea"
         />
-        <div>
-          <button type="button" onClick={() => setCurrentView("list")}>
+
+        <div className="buttons-container">
+          <button
+            type="button"
+            onClick={() => setCurrentView("list")}
+            className="back-button"
+          >
             Back to list
           </button>
-          <button type="submit">Submit</button>
+          <button type="submit" className="create-button">
+            Submit
+          </button>
         </div>
       </form>
     </section>
+  );
+}
+
+export function LabelAndInput({
+  id,
+  name,
+  value,
+  setFormData,
+  formData,
+  placeholder,
+  required = false,
+  setFormDataHelper, // pass the helper in
+  labelClassName = "",
+  inputClassName = "",
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className={labelClassName}>
+        {name}
+      </label>
+      <input
+        id={id}
+        type="text"
+        value={value}
+        onChange={(event) =>
+          setFormDataHelper(setFormData, id, event, formData)
+        }
+        placeholder={placeholder}
+        required={required}
+        className={inputClassName}
+      />
+    </div>
   );
 }
 

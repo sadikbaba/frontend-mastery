@@ -1,0 +1,122 @@
+.edit-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.edit-description {
+  color: #666;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.edit-section {
+  width: 100%;
+  max-width: 600px;
+
+  margin: 48px auto;
+  padding: 24px 32px;
+
+  background-color: #fff;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edit-form label {
+  display: block;
+  font-weight: bold;
+}
+
+.edit-form .edit-input,
+.edit-form .edit-textarea {
+  width: 100%;
+  padding: 8px;
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  outline: none;
+
+  transition:
+    border-color 0.3s ease-in-out,
+    transform 0.2s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+  transform: translateY(0);
+}
+
+.edit-form .edit-input:focus,
+.edit-form .edit-textarea:focus {
+  border-color: #999;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.edit-form .edit-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.edit-form .edit-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 24px;
+}
+
+.edit-form .update-button,
+.edit-form .back-button {
+  padding: 8px 16px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease-in-out,
+    transform 0.2s ease-in-out;
+  transform: translateY(0);
+  font-weight: 800;
+}
+.edit-form .update-button {
+  background-color: #009cff;
+  color: #fff;
+
+  border: 1px solid #009cff;
+}
+
+.edit-form .back-button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.edit-form .update-button:hover {
+  background-color: #008af3;
+  transform: translateY(-1px);
+}
+
+.edit-form .back-button:hover {
+  background-color: #f2f2f2;
+  border-color: #aaa;
+  transform: translateX(-2px);
+}
+
+@media (max-width: 600px) {
+  .edit-section {
+    width: calc(100% - 32px);
+    margin: 24px auto;
+    padding: 20px;
+    
+  }
+}
