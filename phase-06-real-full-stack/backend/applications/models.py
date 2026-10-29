@@ -4,6 +4,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Application(models.Model):
     # user  = models.ForeignKey(
     #     settings.AUTH_USER_MODEL,

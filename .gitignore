@@ -37,6 +37,8 @@ coverage
 # .env
 .env
 
+.venv
+
 
 # github and vs code 
 .github
