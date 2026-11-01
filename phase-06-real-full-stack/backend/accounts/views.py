@@ -134,7 +134,6 @@ class LogoutView(CSRFProtectedMixin, APIView):
             except TokenError:
                 pass  # Token is invalid or already blacklisted, ignore
 
-
         response = Response({"message": "Logout successful"}, status=200)
         response.delete_cookie("access_token", path="/")
         response.delete_cookie("refresh_token", path="/v1/api/accounts/")
