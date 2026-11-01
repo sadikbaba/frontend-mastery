@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
+
     class Meta:
         model = User
         fields = ["username", "email", "password"]
@@ -15,10 +18,19 @@ class RegistrationSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+    def validate(self, attrs):
+        user = User(email=attrs["email"], username=attrs["username"])
+
+        try:
+            validate_password(attrs["password"], user=user)
+        except DjangoValidationError as e:
+            raise serializers.ValidationError({"password": list(e.messages)})
+        return attrs
+
     def validate_email(self, value):
         email = User.objects.filter(email=value).exists()
         if email:
-           raise serializers.ValidationError("A user with that email already exists.")
+            raise serializers.ValidationError("A user with that email already exists.")
         return value
 
 
