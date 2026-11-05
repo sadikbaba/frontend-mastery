@@ -5,7 +5,7 @@ import "./App.css";
 import ApplicationForm from "./components/ApplicationForm";
 import ApplicationList from "./components/ApplicationList";
 import EditApplicationForm from "./components/EditApplicationForm";
-
+import RegisterForm from "./components/RegisterForm.jsx";
 function App() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,6 @@ function App() {
     );
   }
 
-
   return (
     <>
       <main>
@@ -102,6 +101,8 @@ function App() {
             onUpdated={handleApplicationUpdated}
           />
         )}
+
+        <RegisterForm />
       </main>
     </>
   );
