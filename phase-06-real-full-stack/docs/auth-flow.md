@@ -10,13 +10,14 @@ The system uses JWT authentication stored in HttpOnly cookies.
 The backend is responsible for authenticating users
 and protecting application data.
 
-
+```mermaid
 flowchart TD
     A[User opens application] --> B[React requests CSRF cookie]
     B --> C[User registers or logs in]
     C --> D[Django validates credentials]
-    D --> E[Backend sets HttpOnly JWT cookies]
+    D --> E[Backend sets HttpOnly cookies]
     E --> F[React updates authentication state]
     F --> G[React requests protected data]
     G --> H[Django authenticates request]
     H --> I[React displays user's data]
+```
