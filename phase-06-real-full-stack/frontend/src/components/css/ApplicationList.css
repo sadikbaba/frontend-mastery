@@ -77,6 +77,54 @@
   box-shadow: 0 5px 14px rgba(207, 84, 20, 0.2);
 }
 
+.application-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: -8px 0 22px;
+  padding: 14px 16px;
+  border: 1px solid #eee8e2;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.application-filters label {
+  color: #555b63;
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.application-filters select {
+  min-width: 180px;
+  min-height: 40px;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.application-filters select:hover {
+  border-color: #efc3a9;
+}
+
+.application-filters select:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(234, 106, 36, 0.15);
+}
+
+.filter-loading {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
 .applications-grid {
   list-style: none;
   display: grid;
@@ -290,6 +338,17 @@
   .applications-header-actions {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .application-filters {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 0;
+  }
+
+  .application-filters select {
+    width: 100%;
   }
 
   .applications-grid {

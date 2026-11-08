@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import {
   Navigate,
   useLocation,
   useNavigate,
   useOutletContext,
   useParams,
+  useSearchParams,
 } from "react-router-dom";
 import ApplicationForm from "./components/ApplicationForm.jsx";
 import ApplicationList from "./components/ApplicationList.jsx";
@@ -38,17 +40,44 @@ export function RegisterRoute() {
 }
 
 export function ApplicationListRoute() {
-  const { applications, onApplicationDeleted } = useOutletContext();
+  const {
+    applications,
+    isLoading,
+    loadedStatus,
+    onApplicationDeleted,
+    onStatusFilterChange,
+  } = useOutletContext();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const statusFilter = searchParams.get("status") || "";
+
+  useEffect(() => {
+    if (statusFilter !== loadedStatus) {
+      onStatusFilterChange(statusFilter);
+    }
+  }, [loadedStatus, onStatusFilterChange, statusFilter]);
+
+  function handleFilterChange(status) {
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (status) {
+      nextSearchParams.set("status", status);
+    } else {
+      nextSearchParams.delete("status");
+    }
+
+    setSearchParams(nextSearchParams);
+  }
 
   return (
     <ApplicationList
       applications={applications}
+      filterLoading={isLoading}
+      statusFilter={statusFilter}
       onDeleted={onApplicationDeleted}
+      onFilterChange={handleFilterChange}
       onAdd={() => navigate("/applications/new")}
-      onEdit={(application) =>
-        navigate(`/applications/${application.id}/edit`)
-      }
+      onEdit={(application) => navigate(`/applications/${application.id}/edit`)}
     />
   );
 }

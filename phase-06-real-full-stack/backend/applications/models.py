@@ -12,7 +12,7 @@ class Application(models.Model):
 
     company = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="Applied")
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

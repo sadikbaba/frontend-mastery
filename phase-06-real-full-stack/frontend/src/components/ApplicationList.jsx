@@ -3,7 +3,10 @@ import "./css/ApplicationList.css";
 
 function ApplicationList({
   applications,
+  filterLoading,
+  statusFilter,
   onDeleted,
+  onFilterChange,
   onAdd,
   onEdit,
 }) {
@@ -32,26 +35,53 @@ function ApplicationList({
             {applications.length}{" "}
             {applications.length === 1 ? "application" : "applications"}
           </span>
-          <button
-            type="button"
-            className="add-button"
-            onClick={onAdd}
-          >
+          <button type="button" className="add-button" onClick={onAdd}>
             <span aria-hidden="true">+</span> Add application
           </button>
         </div>
       </div>
 
-      {applications.length === 0 ? (
+      <div className="application-filters">
+        <label htmlFor="status-filter">Filter by status:</label>
+
+        <select
+          id="status-filter"
+          value={statusFilter}
+          aria-busy={filterLoading}
+          onChange={(event) => onFilterChange(event.target.value)}
+        >
+          <option value="">All statuses</option>
+          <option value="Applied">Applied</option>
+          <option value="Interview">Interview</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+        {filterLoading && (
+          <span className="filter-loading" role="status">
+            Updating results...
+          </span>
+        )}
+      </div>
+
+      {applications.length === 0 && statusFilter ? (
         <div className="empty-state">
-          <span className="empty-state-mark" aria-hidden="true">+</span>
-          <h2>Your next opportunity starts here</h2>
-          <p>Add your first application to start tracking your progress.</p>
+          <h2>No applications with this status</h2>
+          <p>Try another status or clear the filter to see all applications.</p>
           <button
             type="button"
             className="add-button"
-            onClick={onAdd}
+            onClick={() => onFilterChange("")}
           >
+            Clear filter
+          </button>
+        </div>
+      ) : applications.length === 0 ? (
+        <div className="empty-state">
+          <span className="empty-state-mark" aria-hidden="true">
+            +
+          </span>
+          <h2>Your next opportunity starts here</h2>
+          <p>Add your first application to start tracking your progress.</p>
+          <button type="button" className="add-button" onClick={onAdd}>
             Add your first application
           </button>
         </div>

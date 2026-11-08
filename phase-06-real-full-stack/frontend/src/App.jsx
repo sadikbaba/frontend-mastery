@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { getApplications } from "./api/applicationsApi";
 import "./App.css";
@@ -14,6 +14,10 @@ function App() {
   const [error, setError] = useState("");
   const [authStatus, setAuthStatus] = useState("checking");
   const location = useLocation();
+  const [initialStatus] = useState(
+    () => new URLSearchParams(window.location.search).get("status") || "",
+  );
+  const [loadedStatus, setLoadedStatus] = useState(initialStatus);
 
   useEffect(() => {
     async function restoreSession() {
@@ -23,7 +27,7 @@ function App() {
 
         await getCsrfCookie();
         await refreshAccessToken();
-        const data = await getApplications();
+        const data = await getApplications({ status: initialStatus });
         setApplications(data);
         setAuthStatus("authenticated");
       } catch (requestError) {
@@ -35,7 +39,7 @@ function App() {
     }
 
     restoreSession();
-  }, []);
+  }, [initialStatus]);
 
   function handleApplicationCreated(createdApplication) {
     setApplications((currentApplications) => [
@@ -61,6 +65,21 @@ function App() {
       ),
     );
   }
+
+  const handleStatusFilterChange = useCallback(async (status) => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const data = await getApplications({ status });
+      setApplications(data);
+      setLoadedStatus(status);
+    } catch (requestError) {
+      setError(requestError.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   async function handleLoginSuccess() {
     setLoading(true);
@@ -98,6 +117,9 @@ function App() {
     onApplicationUpdated: handleApplicationUpdated,
     onApplicationDeleted: handleApplicationDeleted,
     onLoginSuccess: handleLoginSuccess,
+    onStatusFilterChange: handleStatusFilterChange,
+    loadedStatus,
+    isLoading: loading,
   };
 
   if (authStatus === "checking") {
@@ -161,14 +183,7 @@ function App() {
         </div>
       )}
 
-      {authStatus === "authenticated" && loading ? (
-        <div className="app-loading" role="status">
-          <span className="loading-indicator" />
-          <p>Loading your applications...</p>
-        </div>
-      ) : (
-        <Outlet context={outletContext} />
-      )}
+      <Outlet context={outletContext} />
     </main>
   );
 }
