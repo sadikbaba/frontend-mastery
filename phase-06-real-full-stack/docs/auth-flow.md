@@ -13,11 +13,17 @@ and protecting application data.
 ```mermaid
 flowchart TD
     A[User opens application] --> B[React requests CSRF cookie]
-    B --> C[User registers or logs in]
-    C --> D[Django validates credentials]
-    D --> E[Backend sets HttpOnly cookies]
-    E --> F[React updates authentication state]
-    F --> G[React requests protected data]
-    G --> H[Django authenticates request]
-    H --> I[React displays user's data]
+    B --> C[React attempts session restoration]
+    C --> D[Backend validates refresh token]
+    D --> E[Backend sets new access cookie]
+    E --> F[React fetches user's applications]
+    F --> G[User uses the dashboard]
+```
+
+```mermaid
+flowchart TD
+    A[User logs out] --> B[Backend blacklists refresh token]
+    B --> C[Backend deletes authentication cookies]
+    C --> D[React clears authentication state]
+    D --> E[User returns to login]
 ```

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { LabelAndInput } from "./ApplicationForm.jsx";
 import { updateApplication } from "../api/applicationsApi";
 import "./css/EditApplicationForm.css";
@@ -11,17 +12,17 @@ function setFormDataHelper(setFormData, key, event, formData) {
 
 function EditApplicationForm({
   formData,
-  setFormData,
-  setCurrentView,
   onUpdated,
+  onCancel,
 }) {
+  const [draft, setDraft] = useState(formData);
+
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const updatedApplication = await updateApplication(formData.id, formData);
+    const updatedApplication = await updateApplication(draft.id, draft);
 
     onUpdated(updatedApplication);
-    setCurrentView("list");
   }
 
   return (
@@ -34,9 +35,9 @@ function EditApplicationForm({
         <LabelAndInput
           id="company"
           name="Company"
-          value={formData.company}
-          setFormData={setFormData}
-          formData={formData}
+          value={draft.company}
+          setFormData={setDraft}
+          formData={draft}
           placeholder="Enter Company"
           setFormDataHelper={setFormDataHelper}
           inputClassName="edit-input"
@@ -45,9 +46,9 @@ function EditApplicationForm({
         <LabelAndInput
           id="role"
           name="Role"
-          value={formData.role}
-          setFormData={setFormData}
-          formData={formData}
+          value={draft.role}
+          setFormData={setDraft}
+          formData={draft}
           placeholder="Enter Role"
           setFormDataHelper={setFormDataHelper}
           inputClassName="edit-input"
@@ -56,9 +57,9 @@ function EditApplicationForm({
         <LabelAndInput
           id="status"
           name="Status"
-          value={formData.status}
-          setFormData={setFormData}
-          formData={formData}
+          value={draft.status}
+          setFormData={setDraft}
+          formData={draft}
           placeholder="Enter Status"
           setFormDataHelper={setFormDataHelper}
           inputClassName="edit-input"
@@ -67,9 +68,9 @@ function EditApplicationForm({
         <label htmlFor="notes">Notes</label>
         <textarea
           id="notes"
-          value={formData.notes}
+          value={draft.notes}
           onChange={(event) =>
-            setFormDataHelper(setFormData, "notes", event, formData)
+            setFormDataHelper(setDraft, "notes", event, draft)
           }
           className="edit-textarea"
         />
@@ -77,7 +78,7 @@ function EditApplicationForm({
         <div className="edit-buttons-container">
           <button
             type="button"
-            onClick={() => setCurrentView("list")}
+            onClick={onCancel}
             className="back-button"
           >
             Back to list

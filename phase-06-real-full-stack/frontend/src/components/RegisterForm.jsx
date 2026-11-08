@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { getCsrfCookie, registerUser } from "../api/accountsApi.js";
+import PasswordField from "./PasswordField.jsx";
+import "./css/AuthForms.css";
 
-function RegisterForm() {
+function RegisterForm({ onAuthView }) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -28,57 +30,80 @@ function RegisterForm() {
     }
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username</label>
-      <input
-        value={formData.username}
-        type="text"
-        id="username"
-        onChange={(event) =>
-          setFormData({
-            ...formData,
-            username: event.target.value,
-          })
-        }
-        placeholder="Enter username"
-        required
-      />
+    <section className="auth-page">
+      <div className="auth-card">
+        <div className="auth-heading">
+          <span className="auth-eyebrow">APPLICATION TRACKER</span>
+          <h1>Create your account</h1>
+          <p>Set up an account to organize your job applications.</p>
+        </div>
 
-      <label htmlFor="email">Email</label>
-      <input
-        value={formData.email}
-        type="email"
-        id="email"
-        onChange={(event) =>
-          setFormData({
-            ...formData,
-            email: event.target.value,
-          })
-        }
-        placeholder="Enter Email"
-        required
-      />
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-field">
+            <label htmlFor="username">Username</label>
+            <input
+              value={formData.username}
+              type="text"
+              id="username"
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  username: event.target.value,
+                })
+              }
+              placeholder="Choose a username"
+              autoComplete="username"
+              required
+            />
+          </div>
 
-      <label htmlFor="password">Password</label>
-      <input
-        value={formData.password}
-        type="password"
-        id="password"
-        onChange={(event) =>
-          setFormData({
-            ...formData,
-            password: event.target.value,
-          })
-        }
-        placeholder="Enter Password"
-        required
-      />
+          <div className="auth-field">
+            <label htmlFor="email">Email</label>
+            <input
+              value={formData.email}
+              type="email"
+              id="email"
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  email: event.target.value,
+                })
+              }
+              placeholder="you@example.com"
+              autoComplete="email"
+              required
+            />
+          </div>
 
-      {success && <p>{success}</p>}
-      {error && <p>{error}</p>}
+          <PasswordField
+            id="password"
+            value={formData.password}
+            onChange={(event) =>
+              setFormData({
+                ...formData,
+                password: event.target.value,
+              })
+            }
+            placeholder="Create a password"
+            autoComplete="new-password"
+          />
 
-      <button type="submit">Sign up</button>
-    </form>
+          {success && <p className="auth-message auth-success" role="status">{success}</p>}
+          {error && <p className="auth-message auth-error" role="alert">{error}</p>}
+
+          <button type="submit" className="auth-submit">
+            Register
+          </button>
+        </form>
+
+        <p className="auth-switch">
+          Already have an account?{" "}
+          <button type="button" onClick={onAuthView}>
+            Login
+          </button>
+        </p>
+      </div>
+    </section>
   );
 }
 

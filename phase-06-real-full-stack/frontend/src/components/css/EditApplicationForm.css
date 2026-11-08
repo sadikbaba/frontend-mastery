@@ -1,122 +1,143 @@
 .edit-title {
-  font-size: 24px;
-  margin-bottom: 16px;
-  text-align: center;
+  margin-bottom: 8px;
+  font-size: 1.55rem;
+  letter-spacing: -0.035em;
 }
 
 .edit-description {
-  color: #666;
-  margin-bottom: 24px;
-  text-align: center;
+  margin-bottom: 26px;
+  color: var(--color-muted);
 }
 
+.create-section,
 .edit-section {
   width: 100%;
   max-width: 600px;
-
   margin: 48px auto;
-  padding: 24px 32px;
-
-  background-color: #fff;
-
-  border: 1px solid #ccc;
-  border-radius: 8px;
-
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  border: 1px solid #eee8e2;
+  border-radius: 16px;
+  background: var(--color-surface);
+  box-shadow: 0 12px 34px rgba(45, 35, 28, 0.07);
 }
 
+.create-title {
+  margin-bottom: 8px;
+  font-size: 1.55rem;
+  letter-spacing: -0.035em;
+}
+
+.create-description {
+  margin-bottom: 26px;
+  color: var(--color-muted);
+}
+
+.create-form,
 .edit-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  gap: 17px;
 }
 
+.create-form label,
 .edit-form label {
   display: block;
-  font-weight: bold;
+  margin-bottom: 7px;
+  color: #35383d;
+  font-size: 0.9rem;
+  font-weight: 650;
 }
 
+.create-form input,
+.create-form textarea,
 .edit-form .edit-input,
 .edit-form .edit-textarea {
   width: 100%;
-  padding: 8px;
-
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
   outline: none;
-
+  background: #fff;
+  color: var(--color-text);
+  font-size: 0.95rem;
   transition:
-    border-color 0.3s ease-in-out,
-    transform 0.2s ease-in-out,
-    box-shadow 0.3s ease-in-out;
-  transform: translateY(0);
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
+.create-form input:focus,
+.create-form textarea:focus,
 .edit-form .edit-input:focus,
 .edit-form .edit-textarea:focus {
-  border-color: #999;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(234, 106, 36, 0.15);
 }
 
+.create-form textarea,
 .edit-form .edit-textarea {
-  min-height: 100px;
+  min-height: 120px;
   resize: vertical;
 }
 
+.create-form .buttons-container,
 .edit-form .edit-buttons-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-top: 24px;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
 }
 
+.create-form .create-button,
+.create-form .back-button,
 .edit-form .update-button,
 .edit-form .back-button {
-  padding: 8px 16px;
-
+  min-height: 42px;
+  padding: 9px 16px;
+  border: 1px solid transparent;
   border-radius: 8px;
-
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
-
   transition:
-    background-color 0.3s ease-in-out,
-    transform 0.2s ease-in-out;
-  transform: translateY(0);
-  font-weight: 800;
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
+
+.create-form .create-button,
 .edit-form .update-button {
-  background-color: #009cff;
+  background: var(--color-primary);
   color: #fff;
-
-  border: 1px solid #009cff;
 }
 
-.edit-form .back-button {
-  background-color: #fff;
-  color: #333;
-  border: 1px solid #ccc;
-}
-
+.create-form .create-button:hover,
 .edit-form .update-button:hover {
-  background-color: #008af3;
-  transform: translateY(-1px);
+  background: var(--color-primary-hover);
 }
 
+.create-form .back-button,
+.edit-form .back-button {
+  border-color: var(--color-border);
+  background: #fff;
+  color: #45494f;
+}
+
+.create-form .back-button:hover,
 .edit-form .back-button:hover {
-  background-color: #f2f2f2;
-  border-color: #aaa;
-  transform: translateX(-2px);
+  border-color: var(--color-primary);
+  background: #fff8f3;
+  color: var(--color-primary-hover);
+}
+
+.edit-form .update-button {
+  border-color: var(--color-primary);
 }
 
 @media (max-width: 600px) {
+  .create-section,
   .edit-section {
     width: calc(100% - 32px);
     margin: 24px auto;
     padding: 20px;
-    
   }
 }

@@ -1,32 +1,40 @@
 import { useEffect, useState } from "react";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { getApplications } from "./api/applicationsApi";
 import "./App.css";
+import {
+  getCsrfCookie,
+  logoutUser,
+  refreshAccessToken,
+} from "./api/accountsApi.js";
 
-import ApplicationForm from "./components/ApplicationForm";
-import ApplicationList from "./components/ApplicationList";
-import EditApplicationForm from "./components/EditApplicationForm";
-import RegisterForm from "./components/RegisterForm.jsx";
 function App() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [currentView, setCurrentView] = useState("list");
-  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [authStatus, setAuthStatus] = useState("checking");
+  const location = useLocation();
 
   useEffect(() => {
-    async function fetchData() {
+    async function restoreSession() {
       try {
         setLoading(true);
         setError("");
+
+        await getCsrfCookie();
+        await refreshAccessToken();
         const data = await getApplications();
         setApplications(data);
-      } catch (error) {
-        setError(error.message);
+        setAuthStatus("authenticated");
+      } catch (requestError) {
+        setError(requestError.status === 401 ? "" : requestError.message);
+        setAuthStatus("unauthenticated");
       } finally {
         setLoading(false);
       }
     }
-    fetchData();
+
+    restoreSession();
   }, []);
 
   function handleApplicationCreated(createdApplication) {
@@ -38,73 +46,130 @@ function App() {
 
   function handleApplicationUpdated(updatedApplication) {
     setApplications((currentApplications) =>
-      currentApplications.map((application) => {
-        if (application.id === updatedApplication.id) {
-          return updatedApplication;
-        }
-        return application;
-      }),
+      currentApplications.map((application) =>
+        application.id === updatedApplication.id
+          ? updatedApplication
+          : application,
+      ),
     );
   }
 
   function handleApplicationDeleted(deletedApplication) {
     setApplications((currentApplications) =>
-      currentApplications.filter((application) => {
-        return application.id !== deletedApplication.id;
-      }),
+      currentApplications.filter(
+        (application) => application.id !== deletedApplication.id,
+      ),
     );
   }
 
+  async function handleLoginSuccess() {
+    setLoading(true);
+    setError("");
+
+    try {
+      await getCsrfCookie();
+      const data = await getApplications();
+      setApplications(data);
+      setAuthStatus("authenticated");
+    } catch (requestError) {
+      setError(requestError.message);
+      throw requestError;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      await logoutUser();
+      setAuthStatus("unauthenticated");
+      setApplications([]);
+      setError("");
+    } catch (requestError) {
+      setError(requestError.message);
+    }
+  }
+
+  const isAuthRoute =
+    location.pathname === "/login" || location.pathname === "/register";
+  const outletContext = {
+    applications,
+    onApplicationCreated: handleApplicationCreated,
+    onApplicationUpdated: handleApplicationUpdated,
+    onApplicationDeleted: handleApplicationDeleted,
+    onLoginSuccess: handleLoginSuccess,
+  };
+
+  if (authStatus === "checking") {
+    return (
+      <main className="app-shell">
+        <div className="app-loading" role="status">
+          <span className="loading-indicator" />
+          <p>Getting your workspace ready...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (authStatus === "unauthenticated" && !isAuthRoute) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location }}
+      />
+    );
+  }
+
+  if (authStatus === "authenticated" && isAuthRoute) {
+    return <Navigate to="/applications" replace />;
+  }
+
   return (
-    <>
-      <main>
-        {!loading && currentView === "list" && error && <p>{error}</p>}
-        {loading && <p>Loading applications...</p>}
-
-        {!loading && !error && currentView === "list" && (
-          <ApplicationList
-            applications={applications}
-            setCurrentView={setCurrentView}
-            setSelectedApplication={setSelectedApplication}
-            onDeleted={handleApplicationDeleted}
-          />
-        )}
-
-        {!loading &&
-          !error &&
-          applications.length === 0 &&
-          currentView === "list" && <p>No applications yet.</p>}
-
-        {currentView === "form" && (
-          <ApplicationForm
-            onCreated={handleApplicationCreated}
-            setCurrentView={setCurrentView}
-          />
-        )}
-        {currentView === "list" && (
-          <div className="list-actions">
+    <main className="app-shell">
+      {authStatus === "authenticated" && (
+        <header className="app-topbar">
+          <Link
+            className="app-brand"
+            to="/applications"
+            aria-label="CareerTrack home"
+          >
+            <span className="brand-mark" aria-hidden="true">
+              C
+            </span>
+            <span>CareerTrack</span>
+          </Link>
+          <div className="topbar-actions">
+            <span className="workspace-label">MY WORKSPACE</span>
             <button
               type="button"
-              onClick={() => setCurrentView("form")}
-              className="add-button"
+              onClick={handleLogout}
+              className="logout-button"
             >
-              Add Application
+              Log out
             </button>
           </div>
-        )}
+        </header>
+      )}
 
-        {currentView === "edit" && selectedApplication && (
-          <EditApplicationForm
-            formData={selectedApplication}
-            setFormData={setSelectedApplication}
-            setCurrentView={setCurrentView}
-            onUpdated={handleApplicationUpdated}
-          />
-        )}
+      {error && (
+        <div
+          className={`app-notice app-notice-error${authStatus === "unauthenticated" ? " auth-notice" : ""}`}
+          role="alert"
+        >
+          {error}
+        </div>
+      )}
 
-        <RegisterForm />
-      </main>
-    </>
+      {authStatus === "authenticated" && loading ? (
+        <div className="app-loading" role="status">
+          <span className="loading-indicator" />
+          <p>Loading your applications...</p>
+        </div>
+      ) : (
+        <Outlet context={outletContext} />
+      )}
+    </main>
   );
 }
 

@@ -102,6 +102,7 @@ class RefreshView(CSRFProtectedMixin, TokenRefreshView):
             raise InvalidToken(e.args[0]) from e
 
         access_token = serializer.validated_data["access"]
+        refresh_token = serializer.validated_data["refresh"]
 
         response = Response(
             {"message": "Token refreshed successfully"},
@@ -112,6 +113,15 @@ class RefreshView(CSRFProtectedMixin, TokenRefreshView):
             key="access_token",
             value=access_token,
             path="/",
+            httponly=True,
+            samesite="Lax",
+            secure=not settings.DEBUG,
+        )
+
+        response.set_cookie(
+            key="refresh_token",
+            value=refresh_token,
+            path="/v1/api/accounts/",
             httponly=True,
             samesite="Lax",
             secure=not settings.DEBUG,

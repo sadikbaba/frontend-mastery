@@ -6,11 +6,9 @@ from django.db import models
 
 
 class Application(models.Model):
-    # user  = models.ForeignKey(
-    #     settings.AUTH_USER_MODEL,
-    #     on_delete=models.CASCADE,
-    #     related_name='applications'
-    # )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="applications"
+    )
 
     company = models.CharField(max_length=100)
     role = models.CharField(max_length=100)

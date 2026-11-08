@@ -747,14 +747,14 @@ The goal is one correct full-stack system, not maximum technology count.
 
 Phase 6 is complete only when the learner can independently demonstrate:
 
-- [ ] Explain when a backend is required
-- [ ] Explain the full React → API → database flow
-- [ ] Build and consume a DRF CRUD API
-- [ ] Separate React API calls from UI components
-- [ ] Explain and configure CORS correctly
-- [ ] Implement and explain the chosen authentication flow
-- [ ] Enforce permissions on the backend
-- [ ] Build protected React routes
+- [x] Explain when a backend is required
+- [x] Explain the full React → API → database flow
+- [x] Build and consume a DRF CRUD API
+- [x] Separate React API calls from UI components
+- [x] Explain and configure CORS correctly
+- [x] Implement and explain the chosen authentication flow
+- [x] Enforce permissions on the backend
+- [x] Build protected React routes
 - [ ] Implement filtering, search, and pagination
 - [ ] Handle loading, empty, and error states
 - [ ] Implement at least one justified optimistic update
@@ -796,3 +796,4 @@ Start with **Module 0  Full-Stack Mental Model**.
 First question to answer before writing code:
 
 > What problem requires us to move from a frontend-only React application to a backend-backed application?
+

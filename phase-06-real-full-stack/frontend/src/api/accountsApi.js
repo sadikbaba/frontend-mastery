@@ -16,9 +16,8 @@ export function loginUser(credentials) {
 }
 
 export function refreshAccessToken() {
-  return fetchHelper("POST", `${ACCOUNTS_URL}/refresh/`);
+  return fetchHelper("POST", `${ACCOUNTS_URL}/refresh/`, null, {}, false);
 }
-
 export function logoutUser() {
   return fetchHelper("POST", `${ACCOUNTS_URL}/logout/`);
 }
