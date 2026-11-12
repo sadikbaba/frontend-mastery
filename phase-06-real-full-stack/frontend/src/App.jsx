@@ -18,6 +18,25 @@ function App() {
     () => new URLSearchParams(window.location.search).get("status") || "",
   );
   const [loadedStatus, setLoadedStatus] = useState(initialStatus);
+  const [search, setSearch] = useState("");
+  const [pagination, setPagination] = useState({
+    count: 0,
+    next: null,
+    previous: null,
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+
+  function updateApplications(data, page) {
+    setApplications(data.results);
+
+    setPagination({
+      count: data.count,
+      next: data.next,
+      previous: data.previous,
+    });
+
+    setCurrentPage(page);
+  }
 
   useEffect(() => {
     async function restoreSession() {
@@ -27,9 +46,11 @@ function App() {
 
         await getCsrfCookie();
         await refreshAccessToken();
-        const data = await getApplications({ status: initialStatus });
-        setApplications(data);
+        const data = await getApplications({ status: initialStatus, page: 1 });
+
+        setApplications(data.results);
         setAuthStatus("authenticated");
+        updateApplications(data, 1);
       } catch (requestError) {
         setError(requestError.status === 401 ? "" : requestError.message);
         setAuthStatus("unauthenticated");
@@ -40,6 +61,50 @@ function App() {
 
     restoreSession();
   }, [initialStatus]);
+
+  const handleSearchChange = useCallback(
+    async (searchValue) => {
+      setSearch(searchValue);
+      setLoading(true);
+      setError("");
+
+      try {
+        const data = await getApplications({
+          search: searchValue,
+          status: loadedStatus,
+        });
+
+        setApplications(data.results);
+      } catch (requestError) {
+        setError(requestError.message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [loadedStatus],
+  );
+
+  const handlePageChange = useCallback(
+    async (page) => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const data = await getApplications({
+          search,
+          status: loadedStatus,
+          page,
+        });
+
+        updateApplications(data, page);
+      } catch (requestError) {
+        setError(requestError.message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [search, loadedStatus],
+  );
 
   function handleApplicationCreated(createdApplication) {
     setApplications((currentApplications) => [
@@ -66,20 +131,24 @@ function App() {
     );
   }
 
-  const handleStatusFilterChange = useCallback(async (status) => {
-    setLoading(true);
-    setError("");
+  const handleStatusFilterChange = useCallback(
+    async (status) => {
+      setLoading(true);
+      setError("");
 
-    try {
-      const data = await getApplications({ status });
-      setApplications(data);
-      setLoadedStatus(status);
-    } catch (requestError) {
-      setError(requestError.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      try {
+        const data = await getApplications({ search, status, page: 1 });
+        setApplications(data.results);
+        updateApplications(data, 1);
+        setLoadedStatus(status);
+      } catch (requestError) {
+        setError(requestError.message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [search],
+  );
 
   async function handleLoginSuccess() {
     setLoading(true);
@@ -87,8 +156,9 @@ function App() {
 
     try {
       await getCsrfCookie();
-      const data = await getApplications();
-      setApplications(data);
+      const data = await getApplications({ page: 1 });
+      updateApplications(data, 1);
+      setApplications(data.results);
       setAuthStatus("authenticated");
     } catch (requestError) {
       setError(requestError.message);
@@ -120,6 +190,11 @@ function App() {
     onStatusFilterChange: handleStatusFilterChange,
     loadedStatus,
     isLoading: loading,
+    search,
+    onSearchChange: handleSearchChange,
+    pagination,
+    currentPage,
+    onPageChange: handlePageChange,
   };
 
   if (authStatus === "checking") {
@@ -134,13 +209,7 @@ function App() {
   }
 
   if (authStatus === "unauthenticated" && !isAuthRoute) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-        state={{ from: location }}
-      />
-    );
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   if (authStatus === "authenticated" && isAuthRoute) {

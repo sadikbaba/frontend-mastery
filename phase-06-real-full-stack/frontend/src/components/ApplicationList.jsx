@@ -1,5 +1,6 @@
 import { deleteApplication } from "../api/applicationsApi";
 import "./css/ApplicationList.css";
+import { useEffect, useState } from "react";
 
 function ApplicationList({
   applications,
@@ -9,10 +10,16 @@ function ApplicationList({
   onFilterChange,
   onAdd,
   onEdit,
+  search,
+  onSearchChange,
+  pagination,
+  currentPage,
+  onPageChange,
 }) {
+  const [localSearch, setLocalSearch] = useState(search);
+
   function formatDate(dateString) {
     const date = new Date(dateString);
-
     return date.toLocaleString("en-US", {
       year: "numeric",
       month: "short",
@@ -22,6 +29,17 @@ function ApplicationList({
     });
   }
 
+  // Debounce: only tell the parent after the user stops typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (localSearch !== search) {
+        onSearchChange(localSearch);
+      }
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [localSearch, search, onSearchChange]);
+
   return (
     <section className="applications-section">
       <div className="applications-header">
@@ -30,36 +48,73 @@ function ApplicationList({
           <h1>Your applications</h1>
           <p>Keep every opportunity organized in one place.</p>
         </div>
-        <div className="applications-header-actions">
-          <span className="application-count">
-            {applications.length}{" "}
-            {applications.length === 1 ? "application" : "applications"}
-          </span>
-          <button type="button" className="add-button" onClick={onAdd}>
-            <span aria-hidden="true">+</span> Add application
-          </button>
-        </div>
+        <span className="application-count">
+          {pagination.count}{" "}
+          {pagination.count === 1 ? "application" : "applications"}
+        </span>
       </div>
 
       <div className="application-filters">
-        <label htmlFor="status-filter">Filter by status:</label>
+        <div className="status-filter">
+          <label htmlFor="status-filter">Filter by status</label>
+          <select
+            id="status-filter"
+            value={statusFilter}
+            aria-busy={filterLoading}
+            disabled={filterLoading}
+            onChange={(event) => onFilterChange(event.target.value)}
+          >
+            <option value="">All statuses</option>
+            <option value="Applied">Applied</option>
+            <option value="Interview">Interview</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
 
-        <select
-          id="status-filter"
-          value={statusFilter}
-          aria-busy={filterLoading}
-          onChange={(event) => onFilterChange(event.target.value)}
+        <form
+          className="application-search"
+          role="search"
+          onSubmit={(event) => event.preventDefault()}
         >
-          <option value="">All statuses</option>
-          <option value="Applied">Applied</option>
-          <option value="Interview">Interview</option>
-          <option value="Rejected">Rejected</option>
-        </select>
+          <label className="visually-hidden" htmlFor="application-search">
+            Search applications
+          </label>
+          <svg
+            className="search-icon"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-4-4" />
+          </svg>
+          <input
+            id="application-search"
+            type="search"
+            value={localSearch}
+            placeholder="Company, role or notes..."
+            onChange={(event) => setLocalSearch(event.target.value)}
+            className="search-input"
+          />
+        </form>
         {filterLoading && (
           <span className="filter-loading" role="status">
             Updating results...
           </span>
         )}
+        <button
+          type="button"
+          className="add-button"
+          onClick={onAdd}
+          aria-label="Add application"
+        >
+          <span aria-hidden="true">+</span>
+          <span className="add-button-label">Add application</span>
+        </button>
       </div>
 
       {applications.length === 0 && statusFilter ? (
@@ -74,7 +129,7 @@ function ApplicationList({
             Clear filter
           </button>
         </div>
-      ) : applications.length === 0 ? (
+      ) : pagination.count === 0 ? (
         <div className="empty-state">
           <span className="empty-state-mark" aria-hidden="true">
             +
@@ -137,6 +192,30 @@ function ApplicationList({
             </li>
           ))}
         </ul>
+      )}
+
+      {pagination.count > 0 && (
+        <div className="pagination-controls">
+          <button
+            type="button"
+            className="pagination-button"
+            disabled={!pagination.previous || filterLoading}
+            onClick={() => onPageChange(currentPage - 1)}
+          >
+            Previous
+          </button>
+
+          <span className="pagination-current">Page {currentPage}</span>
+
+          <button
+            type="button"
+            className="pagination-button"
+            disabled={!pagination.next || filterLoading}
+            onClick={() => onPageChange(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
       )}
     </section>
   );

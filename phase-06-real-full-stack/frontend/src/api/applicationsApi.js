@@ -9,6 +9,14 @@ export async function getApplications(filters = {}) {
     params.set("status", filters.status);
   }
 
+  if (filters.search) {
+    params.set("search", filters.search);
+  }
+
+  if (filters.page) {
+    params.set("page", filters.page);
+  }
+
   const queryString = params.toString();
 
   const url = queryString

@@ -44,6 +44,11 @@ export function ApplicationListRoute() {
     applications,
     isLoading,
     loadedStatus,
+    search,
+    onSearchChange,
+    pagination,
+    currentPage,
+    onPageChange,
     onApplicationDeleted,
     onStatusFilterChange,
   } = useOutletContext();
@@ -74,7 +79,12 @@ export function ApplicationListRoute() {
       applications={applications}
       filterLoading={isLoading}
       statusFilter={statusFilter}
+      search={search}
+      onSearchChange={onSearchChange}
       onDeleted={onApplicationDeleted}
+      pagination={pagination}
+currentPage={currentPage}
+onPageChange={onPageChange}
       onFilterChange={handleFilterChange}
       onAdd={() => navigate("/applications/new")}
       onEdit={(application) => navigate(`/applications/${application.id}/edit`)}

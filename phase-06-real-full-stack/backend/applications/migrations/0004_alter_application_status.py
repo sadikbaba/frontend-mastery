@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('applications', '0003_application_user'),
+        ("applications", "0003_application_user"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='application',
-            name='status',
-            field=models.CharField(default='Applied', max_length=100),
+            model_name="application",
+            name="status",
+            field=models.CharField(default="Applied", max_length=100),
         ),
     ]
