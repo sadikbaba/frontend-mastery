@@ -56,7 +56,6 @@ function ApplicationList({
 
       <div className="application-filters">
         <div className="status-filter">
-          <label htmlFor="status-filter">Filter by status</label>
           <select
             id="status-filter"
             value={statusFilter}
@@ -112,7 +111,6 @@ function ApplicationList({
           onClick={onAdd}
           aria-label="Add application"
         >
-          <span aria-hidden="true">+</span>
           <span className="add-button-label">Add application</span>
         </button>
       </div>
