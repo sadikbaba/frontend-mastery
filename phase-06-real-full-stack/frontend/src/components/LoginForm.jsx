@@ -73,20 +73,24 @@ function LoginForm({ onLoginSuccess, onAuthView }) {
             autoComplete="current-password"
           />
 
-          {success && <p className="auth-message auth-success" role="status">{success}</p>}
-          {error && <p className="auth-message auth-error" role="alert">{error}</p>}
+          {success && (
+            <p className="auth-message auth-success" role="status">
+              {success}
+            </p>
+          )}
+          {error && (
+            <p className="auth-message auth-error" role="alert">
+              {error}
+            </p>
+          )}
 
-          <button
-            type="submit"
-            className="auth-submit"
-            disabled={loading}
-          >
+          <button type="submit" className="auth-submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="auth-switch">
-          Don&apos;t have an account?{" "}
+          Don&apos;t have an account?
           <button type="button" onClick={onAuthView}>
             Register
           </button>

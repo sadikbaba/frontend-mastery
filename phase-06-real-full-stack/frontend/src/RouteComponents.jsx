@@ -83,8 +83,8 @@ export function ApplicationListRoute() {
       onSearchChange={onSearchChange}
       onDeleted={onApplicationDeleted}
       pagination={pagination}
-currentPage={currentPage}
-onPageChange={onPageChange}
+      currentPage={currentPage}
+      onPageChange={onPageChange}
       onFilterChange={handleFilterChange}
       onAdd={() => navigate("/applications/new")}
       onEdit={(application) => navigate(`/applications/${application.id}/edit`)}

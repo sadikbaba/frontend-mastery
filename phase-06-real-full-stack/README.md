@@ -755,19 +755,19 @@ Phase 6 is complete only when the learner can independently demonstrate:
 - [x] Implement and explain the chosen authentication flow
 - [x] Enforce permissions on the backend
 - [x] Build protected React routes
-- [ ] Implement filtering, search, and pagination
-- [ ] Handle loading, empty, and error states
-- [ ] Implement at least one justified optimistic update
-- [ ] Write backend/API tests
-- [ ] Write React critical-flow tests
-- [ ] Perform manual auth/permission checks
-- [ ] Add useful offline behavior
-- [ ] Explain the conflict strategy
-- [ ] Document architecture and decisions
-- [ ] Deploy frontend, backend, and database
-- [ ] Pass lint/build/test checks
-- [ ] Rebuild or explain the core architecture from memory
-- [ ] Pass the Phase 6 exit check
+- [x] Implement filtering, search, and pagination
+- [x] Handle loading, empty, and error states
+- [x] Implement at least one justified optimistic update
+- [x] Write backend/API tests
+- [x] Write React critical-flow tests
+- [x] Perform manual auth/permission checks
+- [x] Add useful offline behavior
+- [x] Explain the conflict strategy
+- [x] Document architecture and decisions
+- [x] Deploy frontend, backend, and database
+- [x] Pass lint/build/test checks
+- [x] Rebuild or explain the core architecture from memory
+- [x] Pass the Phase 6 exit check
 
 The exit check will be given as one complete batch of questions.
 
